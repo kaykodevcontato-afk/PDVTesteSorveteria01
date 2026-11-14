@@ -14,6 +14,7 @@
   <script defer src="js/icecream.js"></script>
   <script defer src="js/app.js"></script>
   <script defer src="js/calendar.js"></script>
+  <script defer src="js/cardapio-integracao.js"></script>
 </head>
 <body class="login-locked">
 <div class="shell">
@@ -27,6 +28,7 @@
       <button class="nav-item" data-page="caixa" title="Frente de caixa"><span class="nav-icon">▣</span><span>Frente de caixa</span></button>
       <button class="nav-item" data-page="produtos" title="Casquinhas e embalagens"><span class="nav-icon">▤</span><span>Casquinhas e embalagens</span></button>
       <button class="nav-item" data-page="servicos" title="Sabores e preços"><span class="nav-icon">🍧</span><span>Sabores e preços</span></button>
+       <a class="nav-item" href="catalogo.html" target="_blank" rel="noopener noreferrer" title="Ver cardápio ilustrado"><span class="nav-icon">📸</span><span>Cardápio com fotos ↗</span></a>
       <button class="nav-item" data-page="financeiro" title="Entradas e saídas"><span class="nav-icon">↗</span><span>Financeiro</span></button>
       <button class="nav-item" data-page="funcionarios" title="Funcionários"><span class="nav-icon">♙</span><span>Funcionários</span></button>
       <button class="nav-item" data-page="metas" title="Metas"><span class="nav-icon">◎</span><span>Metas</span></button>
@@ -99,10 +101,10 @@
 
       <!-- 04 — SERVIÇOS -->
       <section class="page" id="page-servicos">
-        <div class="section-head"><div><h2>Sabores e preços de venda</h2><p>Edite os sabores e o preço por quilo e por bola. Os valores iniciais são apenas exemplos.</p></div></div>
+        <div class="section-head"><div><h2>Sabores e preços de venda</h2><p>Configure os preços do PDV e consulte o cardápio ilustrado com 81 opções.</p></div><a class="btn btn-secondary" href="catalogo.html" target="_blank" rel="noopener noreferrer">📸 Abrir cardápio com fotos ↗</a></div>
         <div class="two-col ice-admin-grid">
           <div class="panel"><div class="panel-head"><h3>Sabores disponíveis</h3><button class="btn btn-primary" id="newFlavor">+ Novo sabor</button></div><div class="table-wrap"><table><thead><tr><th>Sabor</th><th>Categoria</th><th>Ações</th></tr></thead><tbody id="flavorRows"></tbody></table></div></div>
-          <div class="panel"><h3>Preços do sorvete</h3><form id="icePricesForm" class="stack-form"><label>Preço por quilo (R$ / kg)<input id="iceWeightPrice" type="number" min="0.01" step="0.01" required></label><label>Preço por bola (R$ / bola)<input id="iceScoopPrice" type="number" min="0.01" step="0.01" required></label><p class="hint">Exemplo: 350 g a R$ 69,90/kg = R$ 24,47. O modo por valor calcula o peso aproximado.</p><button type="submit" class="btn btn-primary">Salvar preços</button></form><div class="ice-admin-info">Casquinhas, cascões e embalagens têm preço e estoque próprios na aba <b>Casquinhas e embalagens</b>. Eles podem ser adicionados à venda junto com o sorvete.</div></div>
+          <div class="panel"><h3>Preços do sorvete</h3><form id="icePricesForm" class="stack-form"><label>Preço por quilo (R$ / kg)<input id="iceWeightPrice" type="number" min="0.01" step="0.01" required></label><label>Preço por bola (R$ / bola)<input id="iceScoopPrice" type="number" min="0.01" step="0.01" required></label><p class="hint">Exemplo: 350 g a R$ 69,90/kg = R$ 24,47. O modo por valor calcula o peso aproximado.</p><p class="hint"><b>Preço informado no novo cardápio: R$ 44,99/kg.</b> Clique em Aplicar preço e depois confira se o sistema salvou o valor. O preço por bola será preservado.</p><button type="button" class="btn btn-secondary" id="applyMenuKgPrice">Aplicar R$ 44,99/kg</button><button type="submit" class="btn btn-primary">Salvar preços</button></form><div class="ice-admin-info">Casquinhas, cascões e embalagens têm preço e estoque próprios na aba <b>Casquinhas e embalagens</b>. Eles podem ser adicionados à venda junto com o sorvete.</div></div>
         </div>
         <div class="panel top-gap"><div class="panel-head"><h3>Outros itens e adicionais</h3><button class="btn btn-secondary" id="newService">+ Novo adicional</button></div><div class="table-wrap"><table><thead><tr><th>Item</th><th>Categoria</th><th>Unidade</th><th>Preço</th><th>Ações</th></tr></thead><tbody id="serviceRows"></tbody></table></div></div>
       </section>
