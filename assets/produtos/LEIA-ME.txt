@@ -1,0 +1,3 @@
+Coloque aqui imagens JPG, PNG ou WebP dos produtos.
+No painel do dono > Produtos e estoque > Editar, informe por exemplo: assets/produtos/sorvete-pave.webp
+A foto aparecerá inteira (object-fit: contain) no PDV.
