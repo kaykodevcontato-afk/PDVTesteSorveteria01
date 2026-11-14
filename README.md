@@ -1,3 +1,45 @@
+# Sorveteria Manager 1.2.4 — PRIMEIRO ACESSO (GitHub Pages)
+
+Desenvolvido por **Dev Kayko**. Edição pronta para publicar a instalação da sorveteria **sem registros de demonstração**.
+
+## Primeiro acesso
+
+- O primeiro acesso **em um navegador sem dados anteriores desse site** solicita a criação da senha do dono.
+- As listas de **vendas, caixa, histórico de aberturas e fechamentos, entradas e saídas, pagamentos de salários e funcionários** começam vazias.
+- **Catálogo de produtos, sabores, preços sugeridos e imagens padrão** permanecem disponíveis para o dono editar.
+- **Estoque de todos os produtos começa em 0**. Faça a contagem real e informe no cadastro antes de vender.
+- Identificação, telefone, cidade, logo e senhas de funcionários deverão ser cadastrados pelo dono.
+
+## ATENÇÃO — publicações no mesmo endereço
+
+O GitHub hospeda os arquivos do site, **não** o banco `localStorage` ou imagens em `IndexedDB` do navegador. Publicar esta versão **não apaga** vendas já salvas no mesmo endereço no mesmo navegador. Isso é intencional para evitar perdas acidentais.
+
+Se já usou o site nesse navegador e quiser reiniciar **apenas a sorveteria**, primeiro exporte um backup e depois exclua especificamente a chave `devkayko_sorveteria_v1` em DevTools → Application → Local Storage. Não use “Limpar todos os dados do site” quando outros projetos compartilham o domínio; isso pode afetá-los também. Fotos armazenadas localmente no IndexedDB não são apagadas ao excluir somente a chave de registros.
+
+**Importante:** a proteção por senha em um site estático não fornece isolamento real entre computadores e usuários, e os dados gravados no navegador não sincronizam entre dispositivos. Para compartilhamento multiusuário real, é necessário backend.
+
+## Publicar no GitHub Pages
+
+1. Extraia o ZIP. Envie o conteúdo da pasta extraída para **a raiz do repositório**, com `index.html` na raiz (e as pastas `css/`, `js/`, `assets/`, `dev-kayko/`). Não envie o ZIP fechado como único arquivo.
+2. Em **Settings → Pages**, configure a publicação por `Deploy from a branch`, com a branch `main` e pasta `/(root)`.
+3. Abra a URL do Pages e crie a senha do dono.
+4. Ajuste o nome da sorveteria, os preços e o estoque, cadastre os funcionários e suas senhas de PDV.
+5. Faça um backup ZIP completo depois de configurar os dados.
+
+## Estrutura do projeto
+
+- `index.html` — interface e formulários
+- `css/style.css` — cores, layout, impressão e calendário
+- `js/data.js` — catálogo inicial e persistência local (chave `devkayko_sorveteria_v1`)
+- `js/app.js` — PDV, carrinho, vendas, caixa e relatórios
+- `js/access.js`, `js/security.js` — controle local de acesso
+- `js/hr.js` — funcionários e salários
+- `js/backup.js`, `js/excel.js` — cópias ZIP, restauração e Excel
+- `js/icecream.js`, `js/milkshake.js` — sorvete por quilo e milk-shakes
+- `assets/` — imagens padrão; `dev-kayko/` — página do desenvolvedor
+
+---
+
 # Sorveteria Manager 1.2.1 — correção de catálogo e backup completo
 
 **Desenvolvido por Dev Kayko.** Projeto estático para GitHub Pages, sem servidor.

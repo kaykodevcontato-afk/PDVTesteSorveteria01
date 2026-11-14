@@ -1,11 +1,13 @@
 /*
- * Sorveteria Manager 1.1.2 — Persistência local
+ * Sorveteria Manager 1.2.4 — Primeira instalação — Persistência local
  * Banco independente da papelaria. Não altere a chave após começar a vender.
  */
 'use strict';
 const DB_KEY = 'devkayko_sorveteria_v1';
 
-// PREÇOS E PRODUTOS INICIAIS SÃO APENAS EXEMPLOS: configure antes de vender.
+// INSTALAÇÃO NOVA: sem vendas, funcionários, caixa, salários ou movimentações.
+// Preços do catálogo são sugestões editáveis; estoque inicial sempre zero.
+// O GitHub Pages hospeda somente o código; registros ficam no navegador do usuário.
 const INITIAL_SERVICES = [
   {name:'Cobertura extra',category:'Adicionais',unit:'unidade',price:3},
   {name:'Granulado extra',category:'Adicionais',unit:'unidade',price:2}
@@ -75,16 +77,16 @@ const INITIAL_PRODUCTS = [
   {name:'Copo 200 ml',category:'Embalagens',code:'COPO200',cost:0.35,price:1,stock:0,minStock:20},
   {name:'Pote 500 ml',category:'Embalagens',code:'POTE500',cost:1.5,price:3,stock:0,minStock:10},
   {name:'Pote 1 litro',category:'Embalagens',code:'POTE1000',cost:2.5,price:5,stock:0,minStock:5},
-  {name:'Picolé de Açaí',category:'Picolés',code:'PIC-ACAI',cost:0,price:2,stock:20,minStock:5,image:'assets/picoles/acai.webp'},
-  {name:'Picolé de Amendoim',category:'Picolés',code:'PIC-AMENDOIM',cost:0,price:2,stock:20,minStock:5,image:'assets/picoles/amendoim.webp'},
-  {name:'Picolé de Chocolate',category:'Picolés',code:'PIC-CHOC',cost:0,price:2,stock:20,minStock:5,image:'assets/picoles/chocolate.webp'},
-  {name:'Picolé de Coco',category:'Picolés',code:'PIC-COCO',cost:0,price:2,stock:20,minStock:5,image:'assets/picoles/coco.webp'},
-  {name:'Picolé de Leite Condensado',category:'Picolés',code:'PIC-COND',cost:0,price:2,stock:20,minStock:5,image:'assets/picoles/leite-condensado.webp'},
-  {name:'Picolé de Limão',category:'Picolés',code:'PIC-LIMAO',cost:0,price:2,stock:20,minStock:5,image:'assets/picoles/limao.webp'},
-  {name:'Picolé de Maçã Verde',category:'Picolés',code:'PIC-MACA',cost:0,price:2,stock:20,minStock:5,image:'assets/picoles/maca-verde.webp'},
-  {name:'Picolé de Maracujá',category:'Picolés',code:'PIC-MARACUJA',cost:0,price:2,stock:20,minStock:5,image:'assets/picoles/maracuja.webp'},
-  {name:'Picolé de Milho Verde',category:'Picolés',code:'PIC-MILHO',cost:0,price:2,stock:20,minStock:5,image:'assets/picoles/milho-verde.webp'},
-  {name:'Picolé de Morango',category:'Picolés',code:'PIC-MORANGO',cost:0,price:2,stock:20,minStock:5,image:'assets/picoles/morango.webp'},
+  {name:'Picolé de Açaí',category:'Picolés',code:'PIC-ACAI',cost:0,price:2,stock:0,minStock:5,image:'assets/picoles/acai.webp'},
+  {name:'Picolé de Amendoim',category:'Picolés',code:'PIC-AMENDOIM',cost:0,price:2,stock:0,minStock:5,image:'assets/picoles/amendoim.webp'},
+  {name:'Picolé de Chocolate',category:'Picolés',code:'PIC-CHOC',cost:0,price:2,stock:0,minStock:5,image:'assets/picoles/chocolate.webp'},
+  {name:'Picolé de Coco',category:'Picolés',code:'PIC-COCO',cost:0,price:2,stock:0,minStock:5,image:'assets/picoles/coco.webp'},
+  {name:'Picolé de Leite Condensado',category:'Picolés',code:'PIC-COND',cost:0,price:2,stock:0,minStock:5,image:'assets/picoles/leite-condensado.webp'},
+  {name:'Picolé de Limão',category:'Picolés',code:'PIC-LIMAO',cost:0,price:2,stock:0,minStock:5,image:'assets/picoles/limao.webp'},
+  {name:'Picolé de Maçã Verde',category:'Picolés',code:'PIC-MACA',cost:0,price:2,stock:0,minStock:5,image:'assets/picoles/maca-verde.webp'},
+  {name:'Picolé de Maracujá',category:'Picolés',code:'PIC-MARACUJA',cost:0,price:2,stock:0,minStock:5,image:'assets/picoles/maracuja.webp'},
+  {name:'Picolé de Milho Verde',category:'Picolés',code:'PIC-MILHO',cost:0,price:2,stock:0,minStock:5,image:'assets/picoles/milho-verde.webp'},
+  {name:'Picolé de Morango',category:'Picolés',code:'PIC-MORANGO',cost:0,price:2,stock:0,minStock:5,image:'assets/picoles/morango.webp'},
   ...PREMIUM_PALETAS,
   ...NEW_CATALOG_PRODUCTS
 ];
@@ -150,16 +152,16 @@ function normalizeMilkConfig(value){
 const uid = () => globalThis.crypto?.randomUUID?.() || `${Date.now()}-${Math.random().toString(36).slice(2)}`;
 
 const DEFAULT_POPSICLES = [
-  {name:'Picolé de Açaí',category:'Picolés',code:'PIC-ACAI',cost:0,price:2,stock:20,minStock:5,image:'assets/picoles/acai.webp'},
-  {name:'Picolé de Amendoim',category:'Picolés',code:'PIC-AMENDOIM',cost:0,price:2,stock:20,minStock:5,image:'assets/picoles/amendoim.webp'},
-  {name:'Picolé de Chocolate',category:'Picolés',code:'PIC-CHOC',cost:0,price:2,stock:20,minStock:5,image:'assets/picoles/chocolate.webp'},
-  {name:'Picolé de Coco',category:'Picolés',code:'PIC-COCO',cost:0,price:2,stock:20,minStock:5,image:'assets/picoles/coco.webp'},
-  {name:'Picolé de Leite Condensado',category:'Picolés',code:'PIC-COND',cost:0,price:2,stock:20,minStock:5,image:'assets/picoles/leite-condensado.webp'},
-  {name:'Picolé de Limão',category:'Picolés',code:'PIC-LIMAO',cost:0,price:2,stock:20,minStock:5,image:'assets/picoles/limao.webp'},
-  {name:'Picolé de Maçã Verde',category:'Picolés',code:'PIC-MACA',cost:0,price:2,stock:20,minStock:5,image:'assets/picoles/maca-verde.webp'},
-  {name:'Picolé de Maracujá',category:'Picolés',code:'PIC-MARACUJA',cost:0,price:2,stock:20,minStock:5,image:'assets/picoles/maracuja.webp'},
-  {name:'Picolé de Milho Verde',category:'Picolés',code:'PIC-MILHO',cost:0,price:2,stock:20,minStock:5,image:'assets/picoles/milho-verde.webp'},
-  {name:'Picolé de Morango',category:'Picolés',code:'PIC-MORANGO',cost:0,price:2,stock:20,minStock:5,image:'assets/picoles/morango.webp'}
+  {name:'Picolé de Açaí',category:'Picolés',code:'PIC-ACAI',cost:0,price:2,stock:0,minStock:5,image:'assets/picoles/acai.webp'},
+  {name:'Picolé de Amendoim',category:'Picolés',code:'PIC-AMENDOIM',cost:0,price:2,stock:0,minStock:5,image:'assets/picoles/amendoim.webp'},
+  {name:'Picolé de Chocolate',category:'Picolés',code:'PIC-CHOC',cost:0,price:2,stock:0,minStock:5,image:'assets/picoles/chocolate.webp'},
+  {name:'Picolé de Coco',category:'Picolés',code:'PIC-COCO',cost:0,price:2,stock:0,minStock:5,image:'assets/picoles/coco.webp'},
+  {name:'Picolé de Leite Condensado',category:'Picolés',code:'PIC-COND',cost:0,price:2,stock:0,minStock:5,image:'assets/picoles/leite-condensado.webp'},
+  {name:'Picolé de Limão',category:'Picolés',code:'PIC-LIMAO',cost:0,price:2,stock:0,minStock:5,image:'assets/picoles/limao.webp'},
+  {name:'Picolé de Maçã Verde',category:'Picolés',code:'PIC-MACA',cost:0,price:2,stock:0,minStock:5,image:'assets/picoles/maca-verde.webp'},
+  {name:'Picolé de Maracujá',category:'Picolés',code:'PIC-MARACUJA',cost:0,price:2,stock:0,minStock:5,image:'assets/picoles/maracuja.webp'},
+  {name:'Picolé de Milho Verde',category:'Picolés',code:'PIC-MILHO',cost:0,price:2,stock:0,minStock:5,image:'assets/picoles/milho-verde.webp'},
+  {name:'Picolé de Morango',category:'Picolés',code:'PIC-MORANGO',cost:0,price:2,stock:0,minStock:5,image:'assets/picoles/morango.webp'}
 ];
 
 function freshData() {
@@ -171,7 +173,7 @@ function freshData() {
     products:INITIAL_PRODUCTS.map(item=>({id:uid(),...item})),
     services:INITIAL_SERVICES.map(item=>({id:uid(),...item})),
     milkshakes:defaultMilkConfig(),
-    employees:[],movements:[],sales:[],sessions:[],
+    employees:[],movements:[],sales:[],sessions:[], // nenhuma movimentação ou histórico de demonstração
     goals:{daily:0,monthly:0},
     ui:{theme:'light',favorites:[],operatorId:''},
     security:null, // senha antiga do caixa passa a ser senha do dono
