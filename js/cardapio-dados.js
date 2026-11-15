@@ -194,7 +194,7 @@ window.CARDAPIO_DADOS = {
                 {
                     "id": "milk-shakes-tradicionais-brigadeiro",
                     "name": "Brigadeiro",
-                    "image": "assets/milkshakes/Brigadeiro.webp",
+                    "image": "assets/milkshakes/BrigadeiroMilkshaker.webp",
                     "options": [
                         {
                             "label": "300 ml",
@@ -214,7 +214,7 @@ window.CARDAPIO_DADOS = {
                 {
                     "id": "milk-shakes-tradicionais-chiclete",
                     "name": "Chiclete",
-                    "image": "assets/produtos/shake-chiclete.jpg",
+                    "image": "assets/milkshakes/ChicleteMilkShaker.webp",
                     "options": [
                         {
                             "label": "300 ml",
@@ -234,7 +234,7 @@ window.CARDAPIO_DADOS = {
                 {
                     "id": "milk-shakes-tradicionais-coco",
                     "name": "Coco",
-                    "image": "assets/produtos/shake-coco.jpg",
+                    "image": "assets/milkshakes/CocoMilkShaker.webp",
                     "options": [
                         {
                             "label": "300 ml",
