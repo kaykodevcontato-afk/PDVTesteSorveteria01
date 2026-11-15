@@ -17,70 +17,70 @@
         {
           "id": "picoles-tradicionais-amendoim",
           "name": "Amendoim",
-          "image": "assets/produtos/picole-amendoim.jpg",
+          "image": "assets/picoles/amendoim.webp",
           "price": 2,
           "unit": "unidade"
         },
         {
           "id": "picoles-tradicionais-acai",
           "name": "Açaí",
-          "image": "assets/produtos/picole-acai.jpg",
+          "image": "assets/picoles/acai.webp",
           "price": 2,
           "unit": "unidade"
         },
         {
           "id": "picoles-tradicionais-chocolate",
           "name": "Chocolate",
-          "image": "assets/produtos/picole-chocolate.jpg",
+          "image": "assets/picoles/chocolate.webp",
           "price": 2,
           "unit": "unidade"
         },
         {
           "id": "picoles-tradicionais-coco",
           "name": "Coco",
-          "image": "assets/produtos/picole-coco.jpg",
+          "image": "assets/picoles/coco.webp",
           "price": 2,
           "unit": "unidade"
         },
         {
           "id": "picoles-tradicionais-leite-condensado",
           "name": "Leite Condensado",
-          "image": "assets/produtos/picole-leite-condensado.jpg",
+          "image": "assets/picoles/leite-condensado.webp",
           "price": 2,
           "unit": "unidade"
         },
         {
           "id": "picoles-tradicionais-limao",
           "name": "Limão",
-          "image": "assets/produtos/picole-limao.jpg",
+          "image": "assets/picoles/limao.webp",
           "price": 2,
           "unit": "unidade"
         },
         {
           "id": "picoles-tradicionais-maracuja",
           "name": "Maracujá",
-          "image": "assets/produtos/picole-maracuja.jpg",
+          "image": "assets/picoles/maracuja.webp",
           "price": 2,
           "unit": "unidade"
         },
         {
           "id": "picoles-tradicionais-maca-verde",
           "name": "Maçã Verde",
-          "image": "assets/produtos/picole-maca-verde.jpg",
+          "image": "assets/picoles/maca-verde.webp",
           "price": 2,
           "unit": "unidade"
         },
         {
           "id": "picoles-tradicionais-milho-verde",
           "name": "Milho Verde",
-          "image": "assets/produtos/picole-milho-verde.jpg",
+          "image": "assets/picoles/milho-verde.webp",
           "price": 2,
           "unit": "unidade"
         },
         {
           "id": "picoles-tradicionais-morango",
           "name": "Morango",
-          "image": "assets/produtos/picole-morango.jpg",
+          "image": "assets/picoles/morango.webp",
           "price": 2,
           "unit": "unidade"
         }
@@ -95,84 +95,84 @@
         {
           "id": "sorvete-por-quilo-morango",
           "name": "Morango",
-          "image": "assets/produtos/bola-morango.jpg",
+          "image": "assets/sabores/morango.webp",
           "price": 44.99,
           "unit": "kg"
         },
         {
           "id": "sorvete-por-quilo-brigadeiro",
           "name": "Brigadeiro",
-          "image": "assets/produtos/bola-brigadeiro.jpg",
+          "image": "assets/sabores/brigadeiro.webp",
           "price": 44.99,
           "unit": "kg"
         },
         {
           "id": "sorvete-por-quilo-chiclete",
           "name": "Chiclete",
-          "image": "assets/produtos/bola-chiclete.jpg",
+          "image": "assets/sabores/chiclete.webp",
           "price": 44.99,
           "unit": "kg"
         },
         {
           "id": "sorvete-por-quilo-napolitano",
           "name": "Napolitano",
-          "image": "assets/produtos/bola-napolitano.jpg",
+          "image": "assets/sabores/napolitano.webp",
           "price": 44.99,
           "unit": "kg"
         },
         {
           "id": "sorvete-por-quilo-sonho-de-valsa",
           "name": "Sonho de Valsa",
-          "image": "assets/produtos/bola-sonho-de-valsa.jpg",
+          "image": "assets/sabores/sonho-de-valsa.webp",
           "price": 44.99,
           "unit": "kg"
         },
         {
           "id": "sorvete-por-quilo-abacaxi",
           "name": "Abacaxi",
-          "image": "assets/produtos/bola-abacaxi.jpg",
+          "image": "assets/sabores/abacaxi.webp",
           "price": 44.99,
           "unit": "kg"
         },
         {
           "id": "sorvete-por-quilo-coco",
           "name": "Coco",
-          "image": "assets/produtos/bola-coco.jpg",
+          "image": "assets/sabores/coco.webp",
           "price": 44.99,
           "unit": "kg"
         },
         {
           "id": "sorvete-por-quilo-maracuja",
           "name": "Maracujá",
-          "image": "assets/produtos/bola-maracuja.jpg",
+          "image": "assets/sabores/maracuja.webp",
           "price": 44.99,
           "unit": "kg"
         },
         {
           "id": "sorvete-por-quilo-maca-verde",
           "name": "Maçã Verde",
-          "image": "assets/produtos/bola-maca-verde.jpg",
+          "image": "assets/sabores/maca-verde.webp",
           "price": 44.99,
           "unit": "kg"
         },
         {
           "id": "sorvete-por-quilo-creme-com-passas",
           "name": "Creme com Passas",
-          "image": "assets/produtos/bola-creme-com-passas.jpg",
+          "image": "assets/sabores/creme-com-passas.webp",
           "price": 44.99,
           "unit": "kg"
         },
         {
           "id": "sorvete-por-quilo-nata-goiaba",
           "name": "Nata Goiaba",
-          "image": "assets/produtos/bola-nata-goiaba.jpg",
+          "image": "assets/sabores/nata-goiaba.webp",
           "price": 44.99,
           "unit": "kg"
         },
         {
           "id": "sorvete-por-quilo-flocos",
           "name": "Flocos",
-          "image": "assets/produtos/bola-flocos.jpg",
+          "image": "assets/sabores/flocos.webp",
           "price": 44.99,
           "unit": "kg"
         }

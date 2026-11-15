@@ -1,108 +1,270 @@
+/*
+ * CATÁLOGO — FILTROS, FOTOS, TEMA, IMPRESSÃO E EXPORTAÇÃO.
+ * Alterações de conteúdo: js/conteudo-site.js e js/cardapio-dados.js.
+ * Não altera o banco do PDV nem o localStorage do caixa.
+ */
 (() => {
-  'use strict';
-  const data = window.SORVETERIA_CARDAPIO;
-  const $ = id => document.getElementById(id);
-  if (!data || !Array.isArray(data.categories)) {
-    $('catalogSections').textContent = 'Não foi possível carregar o cardápio. Confira js/cardapio-dados.js.';
-    return;
-  }
-  const formatMoney = value => Number(value).toLocaleString('pt-BR', {style:'currency',currency:'BRL'});
-  const normal = value => String(value ?? '').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();
-  const categories = data.categories;
-  const state = { category:'all', query:'' };
-  const select = $('categorySelect');
-  const list = $('catalogSections');
-  const chips = $('categoryChips');
-  const lightbox = $('lightbox');
-  let lastFocus = null;
-  const filtered = (category) => category.items.filter(p => normal([p.name,category.name,p.unit,p.options?.map(o=>o.label).join(' ')].join(' ')).includes(normal(state.query)));
-  const activeCategories = () => categories.filter(c => state.category === 'all' || c.id === state.category);
-  function element(tag, className, content) {
-    const node = document.createElement(tag);
-    if (className) node.className = className;
-    if (content !== undefined) node.textContent = content;
-    return node;
-  }
-  function priceText(item) {
-    if (item.options) return item.options.map(opt=>`${opt.label}: ${formatMoney(opt.price)}`).join(' • ');
-    return `${formatMoney(item.price)}${item.unit === 'kg' ? '/kg' : ''}`;
-  }
-  function makeCard(item) {
-    const card = element('article','product-card');
-    const photoBtn = element('button','photo-button');
-    photoBtn.type='button'; photoBtn.setAttribute('aria-label',`Ampliar imagem ilustrativa de ${item.name}`);
-    const img = document.createElement('img');
-    img.src=item.image; img.alt=`Imagem ilustrativa de ${item.name}`; img.loading='lazy';img.width=420;img.height=420;
-    img.onerror=()=>{img.alt=`Foto não disponível: ${item.name}`;img.style.display='none';photoBtn.textContent='🍦';photoBtn.style.fontSize='65px';};
-    photoBtn.append(img, element('span','zoom','⌕ Ver foto'));
-    photoBtn.addEventListener('click',()=>openLightbox(item,photoBtn));
-    const body=element('div','product-body');body.appendChild(element('h4','',item.name));
-    if (item.options) {
-      const prices=element('div','variant-prices');
-      for (const opt of item.options) {
-        const row=element('div','variant-row');
-        row.append(element('span','',opt.label),element('strong','',formatMoney(opt.price)));
-        prices.appendChild(row);
-      }
-      body.appendChild(prices);
-    } else {
-      const bottom=element('div','product-bottom');
-      bottom.appendChild(element('div','price',`${formatMoney(item.price)}${item.unit==='kg'?'/kg':''}`));
-      if (item.unit && item.unit!=='kg' && item.unit!=='unidade') bottom.appendChild(element('small','unit',item.unit));
-      body.appendChild(bottom);
+    'use strict';
+    const data = window.CARDAPIO_DADOS;
+    const site = window.SORVETERIA_SITE || {};
+    const $ = id => document.getElementById(id);
+    const money = value => Number(value || 0).toLocaleString('pt-BR', {
+        style: 'currency', currency: 'BRL'
+    });
+    const clean = text => String(text || '').normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '').toLowerCase().trim();
+    const placeholder = 'assets/sem-foto.svg';
+    if (!data || !Array.isArray(data.categories)) {
+        $('catalogSections').textContent = 'Não foi possível carregar os produtos. Confira js/cardapio-dados.js.';
+        return;
     }
-    card.append(photoBtn,body);
-    return card;
-  }
-  function render() {
-    list.replaceChildren();
-    chips.querySelectorAll('button').forEach(btn=>btn.classList.toggle('active',btn.dataset.category===state.category));
-    let count=0, visibleCats=0;
-    for (const category of activeCategories()) {
-      const products=filtered(category);
-      if (!products.length)continue;
-      count+=products.length;visibleCats++;
-      const section=element('section','catalog-section');section.id=`categoria-${category.id}`;
-      const head=element('div','section-head');
-      const headText=element('div');headText.appendChild(element('h3','',category.name));
-      if(category.note)headText.appendChild(element('p','',category.note));
-      head.appendChild(headText);
-      if(category.priceLabel)head.appendChild(element('div','section-price',category.priceLabel));
-      section.appendChild(head);
-      const grid=element('div','product-grid');
-      products.forEach(p=>grid.appendChild(makeCard(p)));
-      section.appendChild(grid);list.appendChild(section);
+    function text(selector, value) {
+        const element = document.querySelector(selector);
+        if (element && value !== undefined)
+            element.textContent = value;
     }
-    $('menuCount').textContent = `${count} ${count===1?'produto':'produtos'} • ${visibleCats} ${visibleCats===1?'categoria':'categorias'}`;
-    $('emptyState').hidden=count!==0;
-  }
-  for(const c of categories){const o=document.createElement('option');o.value=c.id;o.textContent=c.name;select.appendChild(o);}
-  const all=[{id:'all',name:'Todos'},...categories];
-  for(const c of all){
-    const btn=element('button','',c.name);btn.type='button';btn.dataset.category=c.id;
-    btn.addEventListener('click',()=>{state.category=c.id;select.value=c.id;render();$('catalogo').scrollIntoView({behavior:'smooth'});});
-    chips.appendChild(btn);
-  }
-  $('searchProducts').addEventListener('input',e=>{state.query=e.target.value.trim();render();});
-  select.addEventListener('change',e=>{state.category=e.target.value;render();});
-  $('resetFilters').addEventListener('click',()=>{state.category='all';state.query='';select.value='all';$('searchProducts').value='';render();});
-  function openLightbox(item,source){
-    lastFocus=source;$('lightboxImage').src=item.image;$('lightboxImage').alt=`Foto ilustrativa de ${item.name}`;
-    $('lightboxTitle').textContent=item.name;$('lightboxPrice').textContent=priceText(item);
-    lightbox.hidden=false;document.body.classList.add('lightbox-open');$('closeLightbox').focus();
-  }
-  function closeLightbox(){lightbox.hidden=true;document.body.classList.remove('lightbox-open');if(lastFocus)lastFocus.focus();}
-  $('closeLightbox').addEventListener('click',closeLightbox);
-  lightbox.querySelector('[data-close-lightbox]').addEventListener('click',closeLightbox);
-  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!lightbox.hidden)closeLightbox();});
-  const themeKey='devkayko_sorveteria_cardapio_tema';
-  try{if(localStorage.getItem(themeKey)==='dark')document.body.classList.add('dark');}catch(e){}
-  const updateTheme=()=>{$('themeText').textContent=document.body.classList.contains('dark')?'Claro':'Escuro';};updateTheme();
-  $('toggleTheme').addEventListener('click',()=>{document.body.classList.toggle('dark');updateTheme();try{localStorage.setItem(themeKey,document.body.classList.contains('dark')?'dark':'light');}catch(e){}});
-  $('printMenu').addEventListener('click',()=>window.print());
-  $('exportMenu').addEventListener('click',()=>{
-    const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json;charset=utf-8'});
-    const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='sorveteria-cardapio-produtos.json';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),300);
-  });
-  render();
+    function updateTexts() {
+        text('.brand strong', site.nome);
+        text('.footer-inner > div > strong', site.nome ? `🍦 ${site.nome}` : undefined);
+        text('.brand small', site.subtitulo);
+        text('.hero .eyebrow', site.frase);
+        text('#heroTitle', site.tituloPrincipal);
+        const emphasis = document.createElement('em');
+        emphasis.textContent = site.tituloDestaque || 'delicioso!';
+        $('heroTitle').append(' ', emphasis);
+        text('.hero-copy > p', site.descricao);
+        text('#browseTitle', site.chamadaProdutos);
+        text('.browse-title p', site.descricaoProdutos);
+        text('.footer-inner > div > span', site.chamadaRodape);
+        const img = document.querySelector('.hero > img');
+        if (img) {
+            img.src = site.fotoCapa || placeholder;
+            img.onerror = () => { img.onerror = null; img.src = placeholder; };
+        }
+        const note = document.querySelector('.info-note');
+        if (note && site.aviso) {
+            note.textContent = '';
+            const strong = document.createElement('strong');
+            strong.textContent = 'Observação: ';
+            note.append(strong, document.createTextNode(site.aviso));
+        }
+        document.title = `Cardápio | ${site.nome || 'Sorveteria'} — Dev Kayko`;
+    }
+    // Preços da faixa de destaques são lidos do próprio cadastro,
+    // para não ficar um valor antigo após editar js/cardapio-dados.js.
+    function updateHighlights() {
+        const groups = ['picoles-tradicionais', 'sorvete-por-quilo',
+            'milk-shakes-tradicionais', 'mini-paleta-premium'];
+        const targets = document.querySelectorAll('.highlights article strong');
+        groups.forEach((id, index) => {
+            const item = data.categories.find(group => group.id === id)?.items?.[0];
+            const amount = item?.options?.[0]?.price ?? item?.price;
+            if (targets[index] && Number.isFinite(Number(amount))) {
+                targets[index].textContent = money(amount);
+            }
+        });
+    }
+
+    function priceText(item) {
+        if (Array.isArray(item.options) && item.options.length) {
+            return item.options.map(opt => `${opt.label}: ${money(opt.price)}`).join(' · ');
+        }
+        if (typeof item.price === 'number') {
+            return `${money(item.price)}${item.unit === 'kg' ? ' / kg' : ''}`;
+        }
+        return 'Consulte o preço';
+    }
+    function iconButton(label, className) {
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.className = className;
+        button.textContent = label;
+        return button;
+    }
+    function makeImage(item) {
+        const img = document.createElement('img');
+        img.src = item.image || placeholder;
+        img.alt = `Foto ilustrativa: ${item.name}`;
+        img.loading = 'lazy';
+        img.decoding = 'async';
+        img.onerror = () => {
+            img.onerror = null;
+            img.src = placeholder;
+            img.alt = `Foto não cadastrada: ${item.name}`;
+        };
+        return img;
+    }
+    let lastFocus = null;
+    function openLightbox(item) {
+        const modal = $('lightbox');
+        lastFocus = document.activeElement;
+        const img = $('lightboxImage');
+        img.src = item.image || placeholder;
+        img.alt = `Foto ilustrativa: ${item.name}`;
+        img.onerror = () => { img.onerror = null; img.src = placeholder; };
+        $('lightboxTitle').textContent = item.name;
+        $('lightboxPrice').textContent = priceText(item);
+        modal.hidden = false;
+        document.body.classList.add('lightbox-open');
+        $('closeLightbox').focus();
+    }
+    function closeLightbox() {
+        $('lightbox').hidden = true;
+        document.body.classList.remove('lightbox-open');
+        lastFocus?.focus?.();
+    }
+    function createProductCard(item) {
+        const card = document.createElement('article');
+        card.className = 'product-card';
+        const photoButton = iconButton('', 'product-photo');
+        photoButton.setAttribute('aria-label', `Ampliar foto de ${item.name}`);
+        photoButton.append(makeImage(item));
+        photoButton.addEventListener('click', () => openLightbox(item));
+        const info = document.createElement('div');
+        info.className = 'product-info';
+        const title = document.createElement('h3');
+        title.textContent = item.name;
+        const price = document.createElement('p');
+        price.className = 'product-price';
+        price.textContent = priceText(item);
+        info.append(title, price);
+        card.append(photoButton, info);
+        return card;
+    }
+    const categories = data.categories;
+    const select = $('categorySelect');
+    const chips = $('categoryChips');
+    let category = 'all';
+    for (const item of categories) {
+        const option = document.createElement('option');
+        option.value = item.id;
+        option.textContent = item.name;
+        select.append(option);
+    }
+    function updateChipSelection() {
+        for (const button of chips.querySelectorAll('button')) {
+            button.classList.toggle('selected', button.dataset.category === category);
+            button.setAttribute('aria-pressed', String(button.dataset.category === category));
+        }
+    }
+    function addChip(label, id) {
+        const button = iconButton(label, 'category-chip');
+        button.dataset.category = id;
+        button.addEventListener('click', () => {
+            category = id;
+            select.value = id;
+            updateChipSelection();
+            render();
+        });
+        chips.append(button);
+    }
+    addChip('Todos os produtos', 'all');
+    for (const item of categories)
+        addChip(item.name, item.id);
+    updateChipSelection();
+    function render() {
+        const query = clean($('searchProducts').value);
+        const root = $('catalogSections');
+        root.replaceChildren();
+        let count = 0;
+        for (const group of categories) {
+            if (category !== 'all' && category !== group.id)
+                continue;
+            const items = group.items.filter(item => clean([
+                item.name, group.name, item.unit,
+                ...(item.options || []).map(option => option.label)
+            ].join(' ')).includes(query));
+            if (!items.length)
+                continue;
+            count += items.length;
+            const section = document.createElement('section');
+            section.className = 'menu-section';
+            section.id = `categoria-${group.id}`;
+            const header = document.createElement('div');
+            header.className = 'menu-section-head';
+            const name = document.createElement('h2');
+            name.textContent = group.name;
+            const counter = document.createElement('span');
+            counter.className = 'menu-section-count';
+            counter.textContent = `${items.length} ${items.length === 1 ? 'opção' : 'opções'}`;
+            header.append(name, counter);
+            if (group.priceLabel) {
+                const hint = document.createElement('strong');
+                hint.className = 'menu-section-price';
+                hint.textContent = group.priceLabel;
+                header.append(hint);
+            }
+            section.append(header);
+            if (group.note) {
+                const note = document.createElement('p');
+                note.className = 'menu-section-note';
+                note.textContent = group.note;
+                section.append(note);
+            }
+            const grid = document.createElement('div');
+            grid.className = 'product-grid';
+            for (const item of items)
+                grid.append(createProductCard(item));
+            section.append(grid);
+            root.append(section);
+        }
+        $('menuCount').textContent = `${count} ${count === 1 ? 'produto' : 'produtos'}`;
+        $('emptyState').hidden = count !== 0;
+    }
+    $('searchProducts').addEventListener('input', render);
+    select.addEventListener('change', () => {
+        category = select.value;
+        updateChipSelection();
+        render();
+    });
+    $('resetFilters').addEventListener('click', () => {
+        $('searchProducts').value = '';
+        category = 'all';
+        select.value = category;
+        updateChipSelection();
+        render();
+        $('searchProducts').focus();
+    });
+    const THEME_KEY = 'devkayko_catalogo_tema';
+    function setTheme(theme) {
+        const actual = theme === 'dark' ? 'dark' : 'light';
+        document.documentElement.dataset.theme = actual;
+        $('themeText').textContent = actual === 'dark' ? 'Claro' : 'Escuro';
+        try {
+            localStorage.setItem(THEME_KEY, actual);
+        }
+        catch (_) { /* tema opcional */ }
+    }
+    let savedTheme = 'light';
+    try {
+        savedTheme = localStorage.getItem(THEME_KEY) || 'light';
+    }
+    catch (_) { /* navegador restrito */ }
+    setTheme(savedTheme);
+    $('toggleTheme').addEventListener('click', () => {
+        setTheme(document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark');
+    });
+    $('printMenu').addEventListener('click', () => window.print());
+    $('exportMenu').addEventListener('click', () => {
+        const file = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json;charset=utf-8' });
+        const url = URL.createObjectURL(file);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = 'catalogo-produtos.json';
+        document.body.append(link);
+        link.click();
+        link.remove();
+        setTimeout(() => URL.revokeObjectURL(url), 1000);
+    });
+    $('closeLightbox').addEventListener('click', closeLightbox);
+    document.querySelectorAll('[data-close-lightbox]').forEach(el => {
+        el.addEventListener('click', closeLightbox);
+    });
+    document.addEventListener('keydown', event => {
+        if (event.key === 'Escape' && !$('lightbox').hidden)
+            closeLightbox();
+    });
+    updateTexts();
+    updateHighlights();
+    render();
 })();

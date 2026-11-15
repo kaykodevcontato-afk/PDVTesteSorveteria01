@@ -1,0 +1,9 @@
+ARQUIVOS ANTIGOS — preservados apenas para referência.
+
+Estes arquivos foram enviados anteriormente, mas as instruções de atualização
+incremental (ex.: aplicar-no-index-legado.py) foram substituídas pelo pacote
+completo desta pasta. NÃO EXECUTE o script antigo: ele exige um complemento
+(js/auditoria-vendas.js) que não faz parte desta entrega e não é necessário
+para a organização do código existente.
+
+Use o README.md da RAIZ e o guia docs/PUBLICAR-NO-GITHUB.md.

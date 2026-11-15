@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="640" viewBox="0 0 640 640" role="img" aria-label="Foto do produto ainda não disponível">
+  <rect width="640" height="640" fill="#f6e4ef"/>
+  <circle cx="320" cy="253" r="92" fill="#e2c2d6"/>
+  <path d="M220 300h200l-100 164z" fill="#bf83a8"/>
+  <path d="M267 225c0-33 24-57 53-57s53 24 53 57-24 60-53 60-53-27-53-60z" fill="#fff" opacity=".77"/>
+  <text x="320" y="525" text-anchor="middle" fill="#713657" font-size="30" font-weight="bold" font-family="Arial,sans-serif">Foto em breve</text>
+</svg>

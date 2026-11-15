@@ -1,0 +1,82 @@
+﻿Categoria;Produto;Arquivo configurado;Arquivo já incluído no ZIP?
+Picolés tradicionais;Amendoim;assets/picoles/amendoim.webp;SIM
+Picolés tradicionais;Açaí;assets/picoles/acai.webp;SIM
+Picolés tradicionais;Chocolate;assets/picoles/chocolate.webp;SIM
+Picolés tradicionais;Coco;assets/picoles/coco.webp;SIM
+Picolés tradicionais;Leite Condensado;assets/picoles/leite-condensado.webp;SIM
+Picolés tradicionais;Limão;assets/picoles/limao.webp;SIM
+Picolés tradicionais;Maracujá;assets/picoles/maracuja.webp;SIM
+Picolés tradicionais;Maçã Verde;assets/picoles/maca-verde.webp;SIM
+Picolés tradicionais;Milho Verde;assets/picoles/milho-verde.webp;SIM
+Picolés tradicionais;Morango;assets/picoles/morango.webp;SIM
+Sorvete por quilo;Morango;assets/sabores/morango.webp;SIM
+Sorvete por quilo;Brigadeiro;assets/sabores/brigadeiro.webp;SIM
+Sorvete por quilo;Chiclete;assets/sabores/chiclete.webp;SIM
+Sorvete por quilo;Napolitano;assets/sabores/napolitano.webp;SIM
+Sorvete por quilo;Sonho de Valsa;assets/sabores/sonho-de-valsa.webp;SIM
+Sorvete por quilo;Abacaxi;assets/sabores/abacaxi.webp;SIM
+Sorvete por quilo;Coco;assets/sabores/coco.webp;SIM
+Sorvete por quilo;Maracujá;assets/sabores/maracuja.webp;SIM
+Sorvete por quilo;Maçã Verde;assets/sabores/maca-verde.webp;SIM
+Sorvete por quilo;Creme com Passas;assets/sabores/creme-com-passas.webp;SIM
+Sorvete por quilo;Nata Goiaba;assets/sabores/nata-goiaba.webp;SIM
+Sorvete por quilo;Flocos;assets/sabores/flocos.webp;SIM
+Milk-shakes tradicionais;Brigadeiro;assets/milkshakes/Brigadeiro.webp;NÃO
+Milk-shakes tradicionais;Chiclete;assets/produtos/shake-chiclete.jpg;NÃO
+Milk-shakes tradicionais;Coco;assets/produtos/shake-coco.jpg;NÃO
+Milk-shakes tradicionais;Creme com Passas;assets/produtos/shake-creme-com-passas.jpg;NÃO
+Milk-shakes tradicionais;Flocos;assets/produtos/shake-flocos.jpg;NÃO
+Milk-shakes tradicionais;Maracujá;assets/produtos/shake-maracuja.jpg;NÃO
+Milk-shakes tradicionais;Morango;assets/produtos/shake-morango.jpg;NÃO
+Milk-shakes especiais;Ninho com Nutella;assets/produtos/especial-ninho-com-nutella.jpg;NÃO
+Milk-shakes especiais;Ninho com Oreo;assets/produtos/especial-ninho-com-oreo.jpg;NÃO
+Milk-shakes especiais;Ninho Trufado;assets/produtos/especial-ninho-trufado.jpg;NÃO
+Milk-shakes especiais;Ovomaltine;assets/produtos/especial-ovomaltine.jpg;NÃO
+Milk-shakes especiais;Kinder Ovo;assets/produtos/especial-kinder-ovo.jpg;NÃO
+Milk-shakes especiais;Sensação;assets/produtos/especial-sensacao.jpg;NÃO
+Milk-shakes especiais;Cookies;assets/produtos/especial-cookies.jpg;NÃO
+Mini Paleta Premium;Chocolate Branco;assets/produtos/paleta-chocolate-branco.jpg;NÃO
+Mini Paleta Premium;Chocolate Black;assets/produtos/paleta-chocolate-black.jpg;NÃO
+Mini Paleta Premium;Morango com Leite Condensado;assets/produtos/paleta-morango-com-leite-condensado.jpg;NÃO
+Mini Paleta Premium;Brigadeiro de Colher;assets/produtos/paleta-brigadeiro-de-colher.jpg;NÃO
+Mini Paleta Premium;Leite com Avelã;assets/produtos/paleta-leite-com-avela.jpg;NÃO
+Mini Paleta Premium;Bolo de Rolo;assets/produtos/paleta-bolo-de-rolo.jpg;NÃO
+Sorvete 1,5 litro;Chocolate;assets/produtos/tub15-chocolate.jpg;NÃO
+Sorvete 1,5 litro;Morango;assets/produtos/tub15-morango.jpg;NÃO
+Sorvete 1,5 litro;Napolitano;assets/produtos/tub15-napolitano.jpg;NÃO
+Sorvete 1,5 litro;Flocos;assets/produtos/tub15-flocos.jpg;NÃO
+Sorvete 1,5 litro;Nata Goiaba;assets/produtos/tub15-nata-goiaba.jpg;NÃO
+Açaí 900 ml;Açaí 900 ml;assets/produtos/acai-900.jpg;NÃO
+Super Cremosos;Leite Trufado;assets/produtos/cremoso-leite-trufado.jpg;NÃO
+Super Cremosos;Napolitano;assets/produtos/cremoso-napolitano.jpg;NÃO
+Super Cremosos;Bombom de Doce de Leite;assets/produtos/cremoso-bombom-de-doce-de-leite.jpg;NÃO
+Sorvete 1 L — Açaí com Leitinho;Açaí com Leitinho;assets/produtos/tub1l-acai-com-leitinho.jpg;NÃO
+Sorvete 1 L — Sabores especiais;Pavê;assets/produtos/tub1l-pave.jpg;NÃO
+Sorvete 1 L — Sabores especiais;Leite Trufado;assets/produtos/tub1l-leite-trufado.jpg;NÃO
+Sorvete 1 L — Sabores especiais;Leite com Avelã;assets/produtos/tub1l-leite-com-avela.jpg;NÃO
+Sorvete 1 L — Sabores especiais;Delícia de Abacaxi;assets/produtos/tub1l-delicia-de-abacaxi.jpg;NÃO
+Sorvete 1 L — Sabores especiais;Brigadeiro de Colher;assets/produtos/tub1l-brigadeiro-de-colher.jpg;NÃO
+Sorvete 1 L — Sabores especiais;Chocolate Belga Crocante;assets/produtos/tub1l-chocolate-belga-crocante.jpg;NÃO
+Zero Açúcar;Açaí Zero Açúcar;assets/produtos/zero-acai-zero-acucar.jpg;NÃO
+Zero Açúcar;Chocolate Zero;assets/produtos/zero-chocolate-zero.jpg;NÃO
+Salada de frutas;Salada de frutas;assets/produtos/salada.jpg;NÃO
+Coberturas;Chocolate;assets/produtos/cobertura-chocolate.jpg;NÃO
+Coberturas;Morango;assets/produtos/cobertura-morango.jpg;NÃO
+Coberturas;Caramelo;assets/produtos/cobertura-caramelo.jpg;NÃO
+Picolé Pistache;Picolé Pistache;assets/produtos/pistache.jpg;NÃO
+Picolés especiais;Cookies;assets/produtos/picole-especial-cookies.jpg;NÃO
+Picolés especiais;Sensação;assets/produtos/picole-especial-sensacao.jpg;NÃO
+Picolés especiais;Chocolate Zero Açúcar;assets/produtos/picole-especial-chocolate-zero-acucar.jpg;NÃO
+Batidinha de Açaí;Batidinha de Açaí;assets/produtos/batidinha.jpg;NÃO
+Cremosinn;Leite Condensado;assets/produtos/picole-leite-condensado.jpg;NÃO
+Cremosinn;Açaí com Banana;assets/produtos/acai-900.jpg;NÃO
+Cremosinn;Chocolate Branco;assets/produtos/paleta-chocolate-branco.jpg;NÃO
+Cremosinn;Morango;assets/produtos/cobertura-morango.jpg;NÃO
+Cremosinn;Blue;assets/produtos/bola-napolitano.jpg;NÃO
+Cremosinn;Frutas Tropicais;assets/produtos/bola-napolitano.jpg;NÃO
+Cremosinn;Maracujá;assets/produtos/bola-maracuja.jpg;NÃO
+Cremosinn;Coco;assets/produtos/bola-coco.jpg;NÃO
+Cremosinn;Graviola;assets/produtos/bola-napolitano.jpg;NÃO
+Cremosinn;Uva;assets/produtos/bola-napolitano.jpg;NÃO
+Água mineral;Água Mineral 500 ml;assets/produtos/agua-500.jpg;NÃO
+Água mineral;Água Mineral 1,5 L;assets/produtos/agua-1500.jpg;NÃO

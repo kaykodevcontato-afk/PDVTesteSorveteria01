@@ -1,0 +1,19 @@
+SORVETERIA — PROJETO COMPLETO 1.2.4 | DEV KAYKO
+===============================================
+
+1. Abra esta pasta inteira no Visual Studio Code.
+2. index.html = sistema PDV da sorveteria.
+3. catalogo.html = cardápio com fotos.
+4. js/conteudo-site.js = ALTERAR TEXTOS E FOTO DA CAPA.
+5. js/cardapio-dados.js = ALTERAR NOMES, PREÇOS, TAMANHOS E FOTOS.
+6. css/catalogo.css = APARÊNCIA DO CARDÁPIO.
+7. css/style.css = APARÊNCIA DO PDV.
+8. assets/ = FOTOS DOS PRODUTOS.
+9. docs/LISTA-FOTOS.csv = lista de todas as 81 imagens e as que faltam.
+10. README.md = MANUAL COMPLETO.
+
+GITHUB: envie o CONTEÚDO desta pasta descompactada para a RAIZ do repositório.
+Não coloque o ZIP inteiro no repositório esperando que GitHub Pages o execute.
+
+Atenção: preços do CARDÁPIO e do PDV não são sincronizados automaticamente.
+Faça backup completo antes de atualizar um PDV que já esteja em uso.
