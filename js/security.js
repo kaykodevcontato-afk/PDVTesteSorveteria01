@@ -12,7 +12,7 @@ const CashSecurity = (() => {
     const base64ToBytes = str => Uint8Array.from(atob(str), c => c.charCodeAt(0));
     async function derive(password, salt, iterations) {
         if (!globalThis.crypto?.subtle)
-            throw Error('Senha indisponível neste navegador. Use o site HTTPS publicado no GitHub Pages.');
+            throw Error('Senha indisponível neste navegador. Use a versão HTTPS do site.');
         const key = await crypto.subtle.importKey('raw', encoder.encode(password.normalize('NFKC')), 'PBKDF2', false, ['deriveBits']);
         const bits = await crypto.subtle.deriveBits({ name: 'PBKDF2', salt, iterations, hash: 'SHA-256' }, key, 256);
         return new Uint8Array(bits);

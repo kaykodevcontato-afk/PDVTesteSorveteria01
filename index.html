@@ -5,7 +5,7 @@
     <meta content="width=device-width, initial-scale=1" name="viewport">
     <meta content="#1857bf" name="theme-color">
     <meta content="Sorveteria Manager: sorvete somente por quilo, casquinhas, embalagens, caixa e relatórios. Dev Kayko." name="description">
-    <title>Sorveteria Manager 1.2.7 | Dev Kayko</title>
+    <title>Sorveteria | Dev Kayko</title>
     <link href="css/style.css" rel="stylesheet">
     <script defer src="js/cardapio-dados.js"></script>
     <script defer src="js/data.js"></script>
@@ -35,7 +35,7 @@
       <aside class="sidebar" id="sidebar">
         <div class="brand">
           <span class="brand-icon">🍦</span>
-          <span class="brand-copy"><strong id="brandName">Sorveteria Manager</strong> <small>PDV DE SORVETERIA • V1.2.7</small></span>
+          <span class="brand-copy"><strong id="brandName">Sorveteria</strong> <small>PDV DE SORVETERIA • V1.2.7</small></span>
         </div>
         <nav aria-label="Menu principal" id="navigation">
           <button class="nav-item active" data-page="inicio" title="Visão geral"><span class="nav-icon">▦</span> <span>Visão geral</span></button>
@@ -444,7 +444,7 @@
             <div class="panel top-gap" id="milkAdminPanel">
               <div class="panel-head">
                 <h3>🥤 Milk-shakes — preços e fotos</h3>
-                <small>Cadastre sabores, escolha fotos do dispositivo ou use imagens do GitHub</small>
+                <small>Cadastre sabores e escolha as fotos dos produtos</small>
               </div>
               <p class="hint">
                 Escolha a foto diretamente no computador em cada sabor abaixo, ou informe o caminho de uma imagem já publicada. A foto inteira aparece no PDV. Não é necessário ter uma foto para vender.
@@ -468,12 +468,12 @@
                   <label>Selecionar foto do computador ou celular (opcional)
                     <input name="milkNewFile" type="file" accept="image/png,image/jpeg,image/webp">
                   </label>
-                  <label>Caminho da foto publicada no GitHub (opcional)
-                    <input name="milkNewImage" type="text" maxlength="400" placeholder="assets/milkshakes/doce-de-leite.webp">
+                  <label>Foto do produto
+                    <input name="milkNewImage" type="text" maxlength="400" placeholder="Caminho da foto">
                   </label>
                 </div>
                 <button type="submit" class="btn btn-primary">+ Cadastrar sabor</button>
-                <p class="hint">Selecione uma foto local OU informe um caminho do GitHub. A foto escolhida no dispositivo fica salva neste navegador e deve ser incluída no Backup Completo (ZIP) para recuperação. Para aparecer automaticamente em outros aparelhos, publique a imagem no GitHub e use o caminho correspondente.</p>
+                <p class="hint">Selecione uma foto do dispositivo ou informe o caminho da foto. Fotos escolhidas do dispositivo ficam salvas neste navegador e devem ser incluídas no Backup Completo (ZIP). Para exibir a foto em outros aparelhos, use uma imagem publicada junto com o site.</p>
               </form>
               <div class="milk-admin-list" id="milkFlavorAdmin"></div>
             </div>
@@ -803,7 +803,7 @@
                   </label>
                   <label>
                     Telefone
-                    <input id="settingPhone" maxlength="30" placeholder="Ex.: (87) 9.9999-9999">
+                    <input id="settingPhone" maxlength="30" placeholder="Ex.: (87) 99999-9999">
                   </label>
                   <label>
                     Cidade / UF
@@ -891,7 +891,7 @@
         <footer>
           ©
           <span id="footerYear"></span>
-          Sorveteria Manager · Desenvolvido por
+          Sorveteria · Desenvolvido por
           <a class="dev-credit-link" href="dev-kayko/index.html" rel="noopener noreferrer" target="_blank" title="Conheça o site Dev Kayko">Dev Kayko</a>
         </footer>
       </div>
@@ -937,7 +937,7 @@
     <div class="modal-overlay login-overlay" id="loginOverlay" role="presentation">
       <div aria-labelledby="loginTitle" aria-modal="true" class="modal login-modal" role="dialog">
         <div aria-hidden="true" class="login-emblem">🍦</div>
-        <h2 id="loginTitle">Sorveteria Manager</h2>
+        <h2 id="loginTitle">Sorveteria</h2>
         <p class="login-subtitle">Escolha o perfil. Cada funcionário entra com sua própria senha; o dono tem acesso completo.</p>
         <div aria-label="Perfil de acesso" class="login-role-picker" role="group">
           <button aria-pressed="true" class="login-role selected" id="loginOwner" type="button"><strong>👑 Dono</strong> <small>Acesso completo</small></button>

@@ -179,7 +179,7 @@ function freshData() {
     return {
         version: 1,
         businessType: 'sorveteria',
-        settings: { name: 'Sorveteria Manager', phone: '', address: '', weightPrice: 69.90 },
+        settings: { name: 'Sorveteria', phone: '', address: '', weightPrice: 69.90 },
         flavors: INITIAL_FLAVORS.map(name => ({ id: uid(), name, category: 'Sorvetes', image: DEFAULT_FLAVOR_IMAGES[name] || '' })),
         products: INITIAL_PRODUCTS.map(item => ({ id: uid(), ...item })),
         services: INITIAL_SERVICES.map(item => ({ id: uid(), ...item })),
@@ -196,8 +196,8 @@ function freshData() {
 // Dados antigos da 1.0 e 1.1 não possuíam goals e ui.
 function normalizeData(data) {
     // Corrige marcas legadas de projetos de papelaria sem alterar nomes personalizados.
-    if (['papelaria manager', 'minha papelaria', 'minha sorveteria'].includes(String(data.settings.name || '').trim().toLocaleLowerCase('pt-BR'))) {
-        data.settings.name = 'Sorveteria Manager';
+    if (['sorveteria manager', 'papelaria manager', 'minha papelaria', 'minha sorveteria'].includes(String(data.settings.name || '').trim().toLocaleLowerCase('pt-BR'))) {
+        data.settings.name = 'Sorveteria';
     }
     data.flavors = Array.isArray(data.flavors) ? data.flavors : [];
     data.milkshakes = normalizeMilkConfig(data.milkshakes);

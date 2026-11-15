@@ -89,7 +89,7 @@
     selected.soldOut = form.elements.soldOut.value === 'true';
     if (options.length) {selected.options=options;delete selected.price;}
     else {delete selected.options;selected.price=Number(form.elements.price.value)||0;}
-    items(); flash('Alteração aplicada. Clique em Baixar cadastro atualizado e publique no GitHub.');
+    items(); flash('Alteração aplicada. Clique em Baixar cadastro atualizado e substitua o arquivo do projeto.');
   };
   $('delete').onclick = () => {
     if (!selected || !confirm(`Excluir ${selected.name} do catálogo publicado? (Vendas antigas do PDV não serão excluídas)`)) return;
@@ -106,7 +106,7 @@
     const a = document.createElement('a');
     a.href = url; a.download = 'cardapio-dados.js'; document.body.append(a); a.click(); a.remove();
     setTimeout(() => URL.revokeObjectURL(url), 2000);
-    flash('Arquivo criado. Substitua js/cardapio-dados.js no repositório GitHub.');
+    flash('Arquivo criado. Substitua js/cardapio-dados.js no projeto publicado.');
   };
   $('reset').onclick = () => {if (confirm('Descartar alterações não publicadas?')) location.reload();};
   categories();

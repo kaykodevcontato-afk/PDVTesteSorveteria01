@@ -66,7 +66,7 @@ function renderMilkshakeAdmin() {
         <div class="milk-admin-grid">${db.milkshakes.flavors.filter(f => f.type === type).map(f => `<div class="milk-admin-card">
             ${milkPhotoMarkup(f)}<strong>${esc(f.name)}</strong>
             <span class="${f.soldOut ? 'sold-out-chip' : 'milk-available-chip'}">${f.soldOut ? 'ESGOTADO' : 'DISPONÍVEL'}</span>
-            <label>Caminho da foto<input type="text" data-milk-photo="${esc(type + '|' + f.name)}" placeholder="assets/milkshakes/arquivo.webp" maxlength="400" value="${esc(f.image || '')}"></label>
+            <label>Foto do produto<input type="text" data-milk-photo="${esc(type + '|' + f.name)}" placeholder="Caminho da foto" maxlength="400" value="${esc(f.image || '')}"></label>
             <label class="milk-upload-label">Foto do computador<input type="file" accept="image/png,image/jpeg,image/webp" data-milk-upload="${esc(type + '|' + f.name)}"></label>
             <button type="button" class="btn btn-secondary" data-milk-save="${esc(type + '|' + f.name)}">Salvar foto</button>
             <button type="button" class="btn ${f.soldOut ? 'btn-secondary' : 'btn-danger'}" data-milk-status="${esc(type + '|' + f.name)}">${f.soldOut ? '✓ Marcar disponível' : '⛔ Marcar esgotado'}</button>
@@ -124,7 +124,7 @@ function bindMilkshakeEvents() {
         if (!milkTypes[type] || !name || name.length > 120)
             return toast('Informe um tipo e um nome válido.');
         if (file && image)
-            return toast('Escolha apenas uma opção: foto local ou caminho do GitHub.');
+            return toast('Escolha apenas uma opção: foto do dispositivo ou caminho da foto.');
         if (image && !/^assets\/milkshakes\/[a-zA-Z0-9._-]+\.(webp|png|jpe?g)$/i.test(image))
             return toast('Caminho inválido. Use assets/milkshakes/foto.webp');
         if (db.milkshakes.flavors.some(f => f.type === type && f.name.toLocaleLowerCase('pt-BR') === name.toLocaleLowerCase('pt-BR')))

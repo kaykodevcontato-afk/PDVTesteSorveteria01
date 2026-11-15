@@ -197,7 +197,7 @@ function render() {
     const todayStats = periodTotals({ type: 'day', value: today });
     const monthStats = periodTotals({ type: 'month', value: today.slice(0, 7) });
     const open = activeSession();
-    $('brandName').textContent = db.settings.name || 'Sorveteria Manager';
+    $('brandName').textContent = db.settings.name || 'Sorveteria';
     $('todayText').textContent = new Date().toLocaleDateString('pt-BR', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
     $('footerYear').textContent = new Date().getFullYear();
     $('cashStatus').textContent = open ? '● Caixa aberto' : '● Caixa fechado';
@@ -797,8 +797,8 @@ async function submitCashPassword(event) {
 // 7. FORMULÁRIOS DE CADASTRO
 // ────────────────────────────────────────────────────────────
 const fields = {
-    flavors: [['name', 'Nome do sabor', 'text', true], ['category', 'Categoria (ex.: Frutas)', 'text', false], ['image', 'Caminho da foto (opcional, ex.: assets/sabores/morango.webp)', 'text', false]],
-    products: [['name', 'Nome do produto', 'text', true], ['category', 'Categoria (ex.: Embalagens)', 'text', false], ['code', 'Código de barras ou código interno', 'text', false], ['image', 'Caminho da foto (opcional, ex.: assets/picoles/morango.webp)', 'text', false], ['cost', 'Preço de custo (R$)', 'number', true], ['price', 'Preço de venda (R$)', 'number', true], ['stock', 'Quantidade em estoque', 'integer', true], ['minStock', 'Estoque mínimo de alerta', 'integer', true]],
+    flavors: [['name', 'Nome do sabor', 'text', true], ['category', 'Categoria (ex.: Frutas)', 'text', false], ['image', 'Caminho da foto (opcional, ex.: endereço da foto)', 'text', false]],
+    products: [['name', 'Nome do produto', 'text', true], ['category', 'Categoria (ex.: Embalagens)', 'text', false], ['code', 'Código de barras ou código interno', 'text', false], ['image', 'Caminho da foto (opcional, ex.: endereço da foto)', 'text', false], ['cost', 'Preço de custo (R$)', 'number', true], ['price', 'Preço de venda (R$)', 'number', true], ['stock', 'Quantidade em estoque', 'integer', true], ['minStock', 'Estoque mínimo de alerta', 'integer', true]],
     services: [['name', 'Nome do serviço', 'text', true], ['category', 'Categoria (ex.: Adicionais)', 'text', false], ['unit', 'Unidade (página, cópia, serviço...)', 'text', true], ['price', 'Preço de venda (R$)', 'number', true]],
     employees: [['name', 'Nome do funcionário', 'text', true], ['role', 'Cargo', 'text', true], ['salary', 'Salário mensal (R$)', 'number', true]]
 };
@@ -931,7 +931,7 @@ function renderReports() {
     const canceledSales = db.sales.filter(s => s.voided && periodMatch(s.date, period));
     const canceledMoves = db.movements.filter(m => m.voided && periodMatch(m.date, period));
     const sessions = db.sessions.filter(s => periodMatch(s.closedAt || s.openedAt, period));
-    $('reportCompany').textContent = db.settings.name || 'Sorveteria Manager';
+    $('reportCompany').textContent = db.settings.name || 'Sorveteria';
     $('reportCompanyDetail').textContent = [db.settings.city, db.settings.phone, db.settings.address].filter(Boolean).join(' • ');
     const logo = businessLogo();
     $('reportLogo').hidden = !logo;
@@ -1040,7 +1040,7 @@ function receiptMarkup(sale, via) {
       ${cash ? `<div class="receipt-line"><span>Recebido:</span><span>${money(sale.received)}</span></div><div class="receipt-line"><span>Troco:</span><span>${money(change)}</span></div>` : ''}
       ${sale.note ? `<hr class="receipt-divider"><div class="receipt-muted">Obs.: ${esc(sale.note)}</div>` : ''}
       <hr class="receipt-divider">
-      <footer class="receipt-center"><p>Obrigado pela preferência!</p><p>Sorveteria Manager · Dev Kayko</p></footer>
+      <footer class="receipt-center"><p>Obrigado pela preferência!</p><p>Sorveteria · Dev Kayko</p></footer>
     </article>`;
 }
 let receiptPrintTimer = null;
