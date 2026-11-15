@@ -122,7 +122,7 @@ const LEGACY_FLAVORS = ['Chocolate', 'Morango', 'Creme', 'Flocos', 'Baunilha', '
 // MILK-SHAKES — catálogo e preços iniciais. Edite pelo painel do dono.
 // Fotos são caminhos locais; o cliente não envia imagens automaticamente para o GitHub.
 const MILK_FLAVORS = {
-    tradicional: ['Brigadeiro':'assets/milkshakes/BrigadeiroMilkshaker.webp', 'Chiclete', 'Coco', 'Creme com Passas', 'Flocos', 'Maracujá', 'Morango'],
+    tradicional: ['Brigadeiro', 'Chiclete', 'Coco', 'Creme com Passas', 'Flocos', 'Maracujá', 'Morango'],
     especial: ['Ninho com Nutella', 'Ninho com Oreo', 'Ninho Trufado', 'Ovomaltine', 'Kinder ovo', 'Sensação', 'Cookies']
 };
 const MILK_PRICES = { tradicional: { 300: 12, 400: 14, 500: 16 }, especial: { 300: 15, 400: 17, 500: 19 } };
