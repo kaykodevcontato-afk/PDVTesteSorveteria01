@@ -1,5 +1,5 @@
 /*
- * Sorveteria Manager 1.2.4 — Primeira instalação — Persistência local
+ * Sorveteria — Dados iniciais e persistência local
  * Banco independente da papelaria. Não altere a chave após começar a vender.
  */
 'use strict';

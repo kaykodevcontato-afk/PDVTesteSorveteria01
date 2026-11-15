@@ -1,5 +1,5 @@
 /*
- * Sorveteria Manager 1.0.5 — Dev Kayko
+ * Sorveteria — PDV | Dev Kayko
  * Navegação, PDV, financeiro, metas, relatórios e interface.
  * Dados e backups: veja js/data.js
  * Layout e cores: veja css/style.css

@@ -1,0 +1,1 @@
+Abra README.md. Para editar todos os produtos e fotos publicados: js/cardapio-dados.js. Para facilitar, abra editor-produtos.html no navegador e exporte o cadastro atualizado.

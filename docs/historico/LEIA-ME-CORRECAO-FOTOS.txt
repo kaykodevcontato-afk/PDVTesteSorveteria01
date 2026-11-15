@@ -1,0 +1,11 @@
+SORVETERIA 1.2.7 — CORREÇÃO DOS TEXTOS DOS CAMPOS DE FOTO
+
+No cadastro de sabores e produtos, o campo agora aparece como:
+Caminho da foto (opcional, ex.: endereço da foto)
+
+Foram removidos os exemplos com assets/sabores/morango.webp e assets/picoles/morango.webp somente dos rótulos dos campos. Os caminhos reais usados pelas imagens foram mantidos.
+
+PARA ATUALIZAR O GITHUB:
+Substitua apenas js/app.js na pasta js/ do seu repositório.
+Faça Commit changes e atualize a página com Ctrl+F5.
+Faça backup antes de atualizar um PDV em uso.

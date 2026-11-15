@@ -1,36 +1,37 @@
-# Sorveteria Manager — v1.2.7 | Dev Kayko
+# Sorveteria — projeto organizado para GitHub Pages
 
-## Cadastro único no GitHub
+**Desenvolvimento: Dev Kayko** · Base funcional: 1.2.7
 
-**Edite somente `js/cardapio-dados.js`** para alterar produtos publicados, fotos, sabores de sorvete por quilo, milk-shakes, tamanhos e preços. Esse mesmo arquivo alimenta **catalogo.html** e **Frente de Caixa** do PDV. Após enviar fotos para a pasta `assets/`, referencie exatamente o caminho no campo `image` do cadastro. Apenas fazer upload da imagem sem cadastrar seu caminho não cria automaticamente um produto.
+Este pacote contém a Frente de Caixa (`index.html`), o cardápio (`catalogo.html`) e o editor de produtos (`editor-produtos.html`).
 
-* `index.html`: PDV.
-* `catalogo.html`: cardápio público.
-* `js/cardapio-dados.js`: **única fonte de cadastro publicado**.
-* `js/conteudo-site.js`: textos da capa e rodapé.
-* `css/style.css`, `css/catalogo.css`: estilos.
-* `js/data.js`, `js/app.js`, `js/milkshake.js`, `js/icecream.js` e demais scripts: operações do caixa; não editar para adicionar sabores.
-* `assets/`: imagens. Publique antes de referenciar.
+## Comece aqui
 
-### Atualização do site
-1. Faça backup completo no PDV antes de publicar.
-2. Envie o conteúdo do ZIP para a **raiz** do repositório; substitua os arquivos homônimos e mantenha seus arquivos já existentes.
-3. Edite `js/cardapio-dados.js` no GitHub clicando no lápis, ou use o editor `editor-produtos.html` para preparar o arquivo e enviá-lo ao GitHub.
-4. Faça Commit changes e recarregue o site após a publicação (`Ctrl + F5`).
+- **Editar produtos, nomes, preços e endereços das fotos:** `js/cardapio-dados.js` (fonte central publicada).
+- **Editar textos e capa do cardápio:** `js/conteudo-site.js`.
+- **Editar cores e layout:** `css/style.css` (PDV), `css/catalogo.css` (cardápio).
+- **Adicionar fotos:** envie imagens a `assets/` e use exatamente o mesmo caminho no cadastro.
+- **Editor visual:** abra `editor-produtos.html`, exporte os dados e substitua o arquivo indicado pelo editor.
+- **Guia detalhado:** `docs/GUIA-EDICAO.md`.
 
-### Como funciona a sincronização
-- Produtos/sabores publicados no GitHub aparecem na vitrine e são importados para o navegador do PDV **quando o PDV é aberto ou recarregado**.
-- Para produtos vinculados, **nome, preço e foto publicados** prevalecem sobre a versão local (quando existe foto publicada). Preços de milk-shake por sabor/tamanho são lidos do cadastro. Vendas, caixa, estoque, custos, funcionários e histórico permanecem locais.
-- Produtos criados somente no PDV continuam locais e **não** aparecem na vitrine pública até serem cadastrados no arquivo do GitHub.
-- Marcar **esgotado** no PDV é uma alteração local; não atualiza a vitrine pública. Para marcar no cardápio público, defina `"soldOut": true` no cadastro e publique.
-- GitHub Pages é estático: fotos selecionadas pelo dispositivo no PDV não são enviadas automaticamente ao repositório. Não há sincronização do caixa entre vários dispositivos.
-- **Não publique senhas, vendas, backups nem informações de clientes** no repositório.
+## Arquivos de lógica (alterar com cuidado)
 
-### Limpeza de arquivos
-- Retirados documentos legados na pasta `referencias/`, duas cópias JSON de referência que não eram carregadas pelas páginas mantendo os módulos de autenticação intactos.
-- Bibliotecas e módulos carregados pelo PDV foram preservados para evitar regressões.
+| Arquivo | Responsabilidade |
+|---|---|
+| `js/app.js` | Vendas, carrinho, interface, relatórios |
+| `js/data.js` | Persistência e dados locais |
+| `js/access.js`, `js/security.js` | Acesso e proteção local |
+| `js/icecream.js`, `js/milkshake.js` | Sabores, fotos e venda |
+| `js/hr.js` | Funcionários |
+| `js/backup.js`, `js/excel.js` | Exportação e backup |
+| `js/catalogo.js`, `js/editor-produtos.js` | Cardápio e editor |
 
-**Observação:** o preço por kg publicado no catálogo é uma referência de vitrine; o cálculo do caixa mantém o preço configurado pelo dono para não alterar regras de cobrança inesperadamente.
+## Como publicar
 
-### Limitações da publicação estática
-Excluir um produto do arquivo do GitHub remove-o do **cardápio público**, mas não apaga automaticamente o produto existente no PDV local: exclusões automáticas podem afetar controles de estoque e histórico. Para desativar venda sem apagar registros, ajuste o produto no PDV. O catálogo público não recebe mudanças feitas somente no caixa.
+1. Faça **Backup Completo** antes de alterar uma instalação em uso.
+2. Extraia este ZIP e envie **o conteúdo da pasta** para a raiz do repositório.
+3. Mantenha os caminhos das pastas `css/`, `js/` e `assets/`.
+4. Faça commit e recarregue as páginas com `Ctrl + F5`.
+
+**Importante:** GitHub Pages publica arquivos estáticos. Registros do caixa e fotos enviadas apenas no painel local podem permanecer no navegador, e não são publicados para outros dispositivos. O catálogo publicado não é um banco compartilhado de vendas. Não apague o armazenamento do navegador para tentar atualizar fotos.
+
+Os documentos de atualizações antigas foram movidos para `docs/historico/` para deixar a raiz mais simples. Nenhum módulo executável foi removido nesta limpeza preventiva.
