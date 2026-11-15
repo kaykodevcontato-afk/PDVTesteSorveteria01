@@ -127,7 +127,7 @@ const MILK_FLAVORS = {
 };
 const MILK_PRICES = { tradicional: { 300: 12, 400: 14, 500: 16 }, especial: { 300: 15, 400: 17, 500: 19 } };
 function defaultMilkConfig() {
-    return { prices: structuredClone(MILK_PRICES), flavors: Object.entries(MILK_FLAVORS).flatMap(([type, names]) => names.map(name => ({ type, name, image: '' }))) };
+    return { prices: structuredClone(MILK_PRICES), flavors: Object.entries(MILK_FLAVORS).flatMap(([type, names]) => names.map(name => ({ type, name, image: '', soldOut: false }))) };
 }
 function normalizeMilkConfig(value) {
     const base = defaultMilkConfig();
@@ -140,12 +140,26 @@ function normalizeMilkConfig(value) {
                 base.prices[type][size] = price;
         }
     }
-    if (Array.isArray(value.flavors))
-        for (const f of base.flavors) {
-            const previous = value.flavors.find(x => x && x.type === f.type && x.name === f.name);
-            if (previous && typeof previous.image === 'string')
-                f.image = previous.image.slice(0, 400);
-        }
+    // Preserva sabores cadastrados pelo dono, exclusões, fotos e disponibilidade.
+    // Instalações antigas sem a lista continuam recebendo os sabores padrão.
+    if (Array.isArray(value.flavors)) {
+        const seen = new Set();
+        base.flavors = value.flavors.filter(f => f && ['tradicional', 'especial'].includes(f.type)
+            && typeof f.name === 'string' && f.name.trim().length > 0 && f.name.length <= 120)
+            .slice(0, 500).map(f => ({
+                type: f.type,
+                publicCatalogId: typeof f.publicCatalogId === 'string' ? f.publicCatalogId : '',
+                name: f.name.trim(),
+                image: typeof f.image === 'string' ? f.image.slice(0, 400) : '',
+                soldOut: f.soldOut === true,
+                options: Array.isArray(f.options) ? f.options.filter(o => o && typeof o.label === 'string' && Number.isFinite(Number(o.price))).slice(0, 12).map(o => ({label:o.label,price:Number(o.price)})) : []
+            })).filter(f => {
+                const key = `${f.type}|${f.name.toLocaleLowerCase('pt-BR')}`;
+                if (seen.has(key)) return false;
+                seen.add(key);
+                return true;
+            });
+    }
     return base;
 }
 const uid = () => globalThis.crypto?.randomUUID?.() || `${Date.now()}-${Math.random().toString(36).slice(2)}`;
@@ -217,6 +231,7 @@ function normalizeData(data) {
         }
     }
     data.flavors.forEach(f => {
+        f.soldOut = f.soldOut === true;
         if (typeof f.image !== 'string')
             f.image = '';
         // Aplica a nova foto apenas aos sabores sem foto; preserva imagens personalizadas.
@@ -302,15 +317,121 @@ function validData(data) {
     return collections.every(key => data[key].every(item => item && typeof item === 'object' && typeof item.id === 'string'));
 }
 let storageError = false;
+// Catálogo compartilhado: o arquivo js/cardapio-dados.js é a fonte de verdade
+// para produtos publicados, imagens e preços anunciados no GitHub.
+// Nunca modifica vendas, movimentos, estoque, custos nem identificadores do caixa.
+function syncPublishedCatalog(data) {
+    const catalog = window.CARDAPIO_DADOS;
+    if (!catalog || !Array.isArray(catalog.categories)) return data;
+    const normalized = text => String(text || '').normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z0-9]/g, ' ').replace(/\s+/g, ' ').trim();
+    const groupPrefixes = {
+        'picoles-tradicionais': 'Picolé de ',
+        'mini-paleta-premium': 'Mini Paleta Premium - ',
+        'sorvete-1-5-litro': 'Sorvete 1,5 L - ',
+        'sorvete-1-litro': 'Sorvete 1 L - ',
+        'zero-acucar': 'Sorvete Zero Açúcar - ',
+        'super-cremosos': 'Super Cremoso - ',
+        'picoles-especiais': 'Picolé Especial 60 g - ',
+        'cremosinn': 'Cremosinn - ',
+        'coberturas': 'Cobertura '
+    };
+    const categories = catalog.categories;
+    const milkFlavors = [];
+    const usedProductIds = new Set();
+    const groups = Array.isArray(data.products) ? data.products : (data.products = []);
+    const flavors = Array.isArray(data.flavors) ? data.flavors : (data.flavors = []);
+    const milk = data.milkshakes || (data.milkshakes = defaultMilkConfig());
+    for (const category of categories) {
+        if (!category || !Array.isArray(category.items)) continue;
+        const id = String(category.id || '');
+        if (id === 'sorvete-por-quilo') {
+            for (const item of category.items) {
+                if (!item || !item.id || !item.name) continue;
+                let flavor = flavors.find(f => f.publicCatalogId === item.id)
+                    || flavors.find(f => normalized(f.name) === normalized(item.name) && !f.publicCatalogId);
+                if (!flavor) {
+                    flavor = { id: uid(), name: item.name, category: 'Sorvetes', image: '', soldOut: false };
+                    flavors.push(flavor);
+                }
+                flavor.publicCatalogId = item.id;
+                flavor.name = String(item.name);
+                if (item.image) flavor.image = String(item.image);
+                // Esgotado marcado no caixa é preservado até o dono mudar no painel.
+                flavor.soldOut = (typeof item.soldOut === 'boolean' ? item.soldOut : Boolean(flavor.soldOut));
+            }
+            continue;
+        }
+        if (id === 'milk-shakes-tradicionais' || id === 'milk-shakes-especiais') {
+            const type = id === 'milk-shakes-tradicionais' ? 'tradicional' : 'especial';
+            for (const item of category.items) {
+                if (!item || !item.id || !item.name) continue;
+                const match = milk.flavors.find(f => f.publicCatalogId === item.id)
+                    || milk.flavors.find(f => f.type === type && normalized(f.name) === normalized(item.name) && !f.publicCatalogId);
+                const flavor = match || { type, name: item.name, image: '', soldOut: false };
+                if (!match) milk.flavors.push(flavor);
+                flavor.publicCatalogId = item.id;
+                flavor.name = String(item.name);
+                if (item.image) flavor.image = String(item.image);
+                flavor.soldOut = (typeof item.soldOut === 'boolean' ? item.soldOut : Boolean(flavor.soldOut));
+                flavor.options = Array.isArray(item.options) ? item.options.map(o => ({label: String(o.label || ''),price:Number(o.price) || 0})) : [];
+                milkFlavors.push(flavor);
+                if (Array.isArray(item.options)) for (const opt of item.options) {
+                    const size = String(opt.label || '').match(/(300|400|500)/)?.[1];
+                    const price = Number(opt.price);
+                    if (size && Number.isFinite(price) && price > 0)
+                        milk.prices[type][size] = price;
+                }
+            }
+            continue;
+        }
+        for (const item of category.items) {
+            if (!item || typeof item.id !== 'string' || !item.name) continue;
+            // Produtos com variações de tamanho: cada variação tem um SKU único no PDV.
+            const variants = Array.isArray(item.options) && item.options.length
+                ? item.options : [{label: '',price: item.price}];
+            for (const opt of variants) {
+                const suffix = opt.label ? '-' + normalized(opt.label).replaceAll(' ','-') : '';
+                const catalogKey = item.id + suffix;
+                const nameWithPrefix = (groupPrefixes[id] || '') + item.name;
+                const publicName = opt.label ? `${nameWithPrefix} ${opt.label}` : nameWithPrefix;
+                const desired = normalized(publicName);
+                let product = groups.find(p => p.publicCatalogId === catalogKey);
+                if (!product) {
+                    const candidates = groups.filter(p => !p.publicCatalogId && !usedProductIds.has(p.id)
+                        && (normalized(p.name) === desired || normalized(p.name).endsWith(' ' + desired)
+                        || (id === 'picoles-tradicionais' && normalized(p.name) === normalized('Picolé de ' + item.name))
+                        || (id === 'salada-de-frutas' && normalized(p.name) === normalized('Salada de Frutas ' + opt.label))));
+                    if (candidates.length === 1) product = candidates[0];
+                }
+                if (!product) {
+                    product = {id: uid(), name: publicName, category: category.name,
+                        code: ('WEB-' + catalogKey).toUpperCase(), cost: 0, stock: 0, minStock: 5};
+                    groups.push(product);
+                }
+                usedProductIds.add(product.id);
+                product.publicCatalogId = catalogKey;
+                product.name = publicName;
+                if (item.image) product.image = String(item.image);
+                const price = Number(opt.price);
+                if (Number.isFinite(price) && price >= 0) product.price = price;
+                if (!product.category) product.category = category.name;
+                // Quantidades e movimentos financeiros nunca são importados do GitHub.
+            }
+        }
+    }
+    return data;
+}
+
 function loadData() {
     try {
         const raw = localStorage.getItem(DB_KEY);
         if (!raw)
-            return freshData();
+            return syncPublishedCatalog(freshData());
         const data = JSON.parse(raw);
         if (!validData(data))
             throw Error('Registros locais incompatíveis');
-        return normalizeData(data);
+        return syncPublishedCatalog(normalizeData(data));
     }
     catch (error) {
         storageError = true;
@@ -380,7 +501,7 @@ async function importData(file) {
     if (!confirm('ATENÇÃO: restaurar substitui todos os dados locais, inclusive vendas e estoque. Deseja continuar?'))
         return false;
     const original = db;
-    db = normalizeData(data);
+    db = syncPublishedCatalog(normalizeData(data));
     if (!saveData()) {
         db = original;
         return false;

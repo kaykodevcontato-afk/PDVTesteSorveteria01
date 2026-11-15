@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Editor de Produtos — Dev Kayko</title>
+<style>
+:root{font:16px system-ui,Arial,sans-serif;color-scheme:light}*{box-sizing:border-box}body{background:#f3f5fa;color:#182342;margin:0}header{background:#1b315d;color:white;padding:24px max(24px,calc((100vw - 1100px)/2));}main{max-width:1100px;margin:auto;padding:24px}h1{margin:0 0 6px}h2{font-size:1.12rem}p{line-height:1.55}button,.button{background:#2858ba;color:white;border:0;padding:12px 16px;border-radius:9px;cursor:pointer;font:inherit}button.danger{background:#a6293f}button.secondary{background:#57647c}button:disabled{opacity:.5;cursor:not-allowed}select,input{font:inherit;border:1px solid #b8c2d6;border-radius:8px;padding:11px;width:100%;min-width:0}label{font-size:.88rem;font-weight:650;display:block}label input,label select{margin-top:5px}section{background:white;border-radius:14px;padding:22px;margin-top:18px;box-shadow:0 2px 12px #162a4514}.actions{display:flex;gap:10px;flex-wrap:wrap;align-items:center}.layout{display:grid;grid-template-columns:300px 1fr;gap:20px}.list{max-height:550px;overflow:auto;display:grid;gap:5px}.list button{text-align:left;background:#eef2fa;color:#23365d;padding:10px}.list button.selected{background:#dce9fc;outline:2px solid #386dc5}.fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.wide{grid-column:1/-1}.preview{max-height:170px;max-width:220px;object-fit:contain;background:#eef2fa;padding:10px;border-radius:10px}.hint{background:#f0f4fc;padding:12px;border-radius:8px}.muted{color:#5c6680;font-size:.88rem}#notice{font-weight:600;color:#174f2c}.note{border-left:4px solid #d28a29;padding-left:12px}@media(max-width:760px){.layout{grid-template-columns:1fr}.fields{grid-template-columns:1fr}}
+</style>
+<script defer src="js/cardapio-dados.js"></script>
+<script defer src="js/editor-produtos.js"></script>
+</head>
+<body>
+<header><h1>Editor central de produtos e fotos</h1><div>Dev Kayko • Prepare alterações e publique no GitHub</div></header>
+<main>
+<section><div class="actions"><button id="export">Baixar cadastro atualizado (.js)</button><button class="secondary" id="reset">Recomeçar com cadastro publicado</button></div>
+<p class="note">Este editor não publica automaticamente no GitHub. Depois de editar, baixe o arquivo e substitua <code>js/cardapio-dados.js</code> no repositório. Para fotos novas, envie também as imagens para <code>assets/</code>. Nunca publique dados de vendas ou senhas.</p><p id="notice" role="status"></p></section>
+<div class="layout">
+<section><h2>Produtos e sabores</h2><label>Categoria<select id="category"></select></label><p><button id="add">+ Adicionar produto / sabor</button></p><div id="items" class="list"></div></section>
+<section><h2>Editar cadastro</h2><div id="empty" class="muted">Selecione um item para editar.</div><form id="edit" hidden><div class="fields"><label>Nome<input name="name" maxlength="120" required></label><label>ID permanente (não mudar após publicar)<input name="id" readonly></label><label>Foto publicada no GitHub<input name="image" placeholder="assets/milkshakes/morango.webp"></label><label>Preço (R$), exceto itens com tamanhos<input name="price" type="number" min="0" step="0.01"></label><label class="wide">Tamanhos e preços (ex.: 300 ml: 12; 400 ml: 14)<input name="options" placeholder="300 ml: 12; 400 ml: 14; 500 ml: 16"></label><label class="wide">Disponibilidade pública<select name="soldOut"><option value="false">Disponível</option><option value="true">Esgotado</option></select></label></div><p>Pré-visualização da imagem: <span id="imagePath" class="muted"></span></p><img id="preview" class="preview" alt="Prévia da imagem do produto" src="assets/sem-foto.svg"><p class="hint">Use o caminho relativo exato. Uma foto só aparece após ser enviada à pasta <code>assets/</code> do GitHub. Uma imagem escolhida do seu computador não é enviada pelo editor.</p><div class="actions"><button type="submit">Aplicar alteração</button><button id="delete" type="button" class="danger">Excluir do cadastro</button></div></form></section>
+</div>
+</main>
+</body>
+</html>

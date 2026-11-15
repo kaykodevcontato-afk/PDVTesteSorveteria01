@@ -3328,3 +3328,15 @@ Mantêm o papel A4/58 mm e as margens definidas nas seções anteriores. */
 .catalogo-shortcut {
   margin: 0 0 16px;
 }
+
+/* Gestão de disponibilidade dos sabores (PDV e painel do dono) */
+.flavor-sold-out { opacity: .60; filter: grayscale(.75); cursor: not-allowed !important; position: relative; }
+.flavor-sold-out[disabled] { pointer-events: none; }
+.sold-out-chip { display: block; width: fit-content; background: #a3232b; color: white; border-radius: 6px; padding: 3px 7px; font-size: .66rem; font-weight: 800; letter-spacing: .02em; margin: 5px auto 0; }
+.milk-available-chip { color: #147444; font-size: .7rem; font-weight: 800; }
+.milk-new-form { margin: 18px 0 22px; padding: 16px; border: 1px solid var(--line); border-radius: 14px; background: var(--surface-2); }
+.milk-new-form h4 { margin: 0 0 12px; }
+.milk-new-fields { display: grid; grid-template-columns: repeat(auto-fit,minmax(190px,1fr)); gap: 12px; }
+.milk-new-fields label { display: grid; gap: 6px; }
+.milk-new-fields input,.milk-new-fields select { width: 100%; min-width: 0; }
+#flavorRows button[data-ice-status] { font-size: .75rem; margin: 3px 6px 3px 0; }

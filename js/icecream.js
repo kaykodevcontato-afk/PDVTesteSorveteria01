@@ -30,25 +30,26 @@ function renderIce() {
     const amountMode = $('iceInputMode').value;
     $('iceAmountLabel').textContent = amountMode === 'valor' ? 'Valor em reais (R$)' : 'Peso em gramas (g)';
     $('iceAmount').placeholder = amountMode === 'valor' ? 'Ex.: 20.00' : 'Ex.: 350';
-    const available = new Set(db.flavors.map(f => f.id));
+    const available = new Set(db.flavors.filter(f => !f.soldOut).map(f => f.id));
     iceChosenFlavors = new Set([...iceChosenFlavors].filter(id => available.has(id)));
-    $('iceFlavors').innerHTML = db.flavors.map(f => `<button type="button" class="ice-flavor ice-flavor-card" data-ice-flavor="${esc(f.id)}" aria-pressed="${iceChosenFlavors.has(f.id)}" title="Selecionar ${esc(f.name)}">${f.image ? `<span class="ice-flavor-photo"><img src="${esc(f.image)}" alt="Foto de ${esc(f.name)}" loading="lazy" onerror="this.closest('.ice-flavor-photo').classList.add('photo-unavailable');this.remove()"><span class="ice-photo-fallback">🍨<small>Foto</small></span></span>` : `<span class="ice-flavor-photo photo-unavailable"><span class="ice-photo-fallback">🍨<small>Adicionar foto</small></span></span>`}<span class="ice-flavor-name">${esc(f.name)}</span></button>`).join('') || '<small>Nenhum sabor cadastrado. Peça ao dono para cadastrar.</small>';
+    $('iceFlavors').innerHTML = db.flavors.map(f => `<button type="button" class="ice-flavor ice-flavor-card ${f.soldOut ? 'flavor-sold-out' : ''}" data-ice-flavor="${esc(f.id)}" aria-pressed="${iceChosenFlavors.has(f.id)}" ${f.soldOut ? 'disabled aria-disabled="true"' : ''} title="${f.soldOut ? 'Esgotado' : 'Selecionar'} ${esc(f.name)}">${f.image ? `<span class="ice-flavor-photo"><img src="${esc(f.image)}" alt="Foto de ${esc(f.name)}" loading="lazy" onerror="this.closest('.ice-flavor-photo').classList.add('photo-unavailable');this.remove()"><span class="ice-photo-fallback">🍨<small>Foto</small></span></span>` : `<span class="ice-flavor-photo photo-unavailable"><span class="ice-photo-fallback">🍨<small>Adicionar foto</small></span></span>`}<span class="ice-flavor-name">${esc(f.name)}${f.soldOut ? '<span class="sold-out-chip">ESGOTADO</span>' : ''}</span></button>`).join('') || '<small>Nenhum sabor cadastrado. Peça ao dono para cadastrar.</small>';
     const quote = quoteIce();
     $('iceCalcTotal').textContent = quote ? money(quote.total) : money(0);
     $('iceQuoteDetail').textContent = quote ? quote.description : 'Informe o peso ou o valor para calcular';
-    $('iceAddToCart').disabled = !quote;
+    $('iceAddToCart').disabled = !quote || !available.size;
 }
 function renderFlavors() {
     if (!Access.isOwner())
         return;
-    $('flavorRows').innerHTML = db.flavors.map(f => `<tr><td><b>${esc(f.name)}</b></td><td>${esc(f.category || 'Sorvetes')}</td><td>${actionButtons('flavors', f.id)}</td></tr>`).join('') || emptyRow(3, 'Cadastre seus sabores para começar.');
+    $('flavorRows').innerHTML = db.flavors.map(f => `<tr><td><b>${esc(f.name)}</b></td><td>${esc(f.category || 'Sorvetes')}</td><td><button type="button" class="btn ${f.soldOut ? 'btn-danger' : 'btn-secondary'}" data-ice-status="${esc(f.id)}" title="Alternar disponibilidade">${f.soldOut ? '⛔ Esgotado · Liberar' : '✓ Disponível · Esgotar'}</button> ${actionButtons('flavors', f.id)}</td></tr>`).join('') || emptyRow(3, 'Cadastre seus sabores para começar.');
     $('iceWeightPrice').value = Number(db.settings.weightPrice);
 }
 function addIceToCart() {
     const quote = quoteIce();
     if (!quote)
         return toast('Informe um peso ou valor válido.');
-    const flavors = db.flavors.filter(f => iceChosenFlavors.has(f.id)).map(f => f.name);
+    if (!db.flavors.some(f => !f.soldOut)) return toast('Todos os sabores estão esgotados.');
+    const flavors = db.flavors.filter(f => iceChosenFlavors.has(f.id) && !f.soldOut).map(f => f.name);
     const flavorText = flavors.length ? flavors.join(' + ') : 'Sortido / não informado';
     const item = {
         kind: 'ice', id: uid(), name: `Sorvete por peso · ${flavorText}`,
@@ -64,11 +65,23 @@ function addIceToCart() {
     toast(`Sorvete adicionado: ${money(quote.total)}. Finalize no pagamento.`);
 }
 function bindIceEvents() {
+    $('flavorRows').addEventListener('click', event => {
+        const button = event.target.closest('[data-ice-status]');
+        if (!button || !Access.requireOwner()) return;
+        const flavor = db.flavors.find(f => f.id === button.dataset.iceStatus);
+        if (!flavor) return;
+        if (commit(() => { flavor.soldOut = !flavor.soldOut; })) {
+            if (flavor.soldOut) iceChosenFlavors.delete(flavor.id);
+            render();
+            toast(`${flavor.name}: ${flavor.soldOut ? 'Esgotado' : 'Disponível'}`);
+        }
+    });
     $('iceFlavors').addEventListener('click', event => {
         const button = event.target.closest('[data-ice-flavor]');
         if (!button)
             return;
         const id = button.dataset.iceFlavor;
+        if (!db.flavors.some(f => f.id === id && !f.soldOut)) return;
         if (iceChosenFlavors.has(id))
             iceChosenFlavors.delete(id);
         else

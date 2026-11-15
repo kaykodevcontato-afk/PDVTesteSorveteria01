@@ -115,7 +115,7 @@
     }
     function createProductCard(item) {
         const card = document.createElement('article');
-        card.className = 'product-card';
+        card.className = 'product-card' + (item.soldOut ? ' product-sold-out' : '');
         const photoButton = iconButton('', 'product-photo');
         photoButton.setAttribute('aria-label', `Ampliar foto de ${item.name}`);
         photoButton.append(makeImage(item));
@@ -127,6 +127,12 @@
         const price = document.createElement('p');
         price.className = 'product-price';
         price.textContent = priceText(item);
+        if (item.soldOut) {
+            const sold = document.createElement('span');
+            sold.className = 'public-sold-out';
+            sold.textContent = 'ESGOTADO';
+            info.append(sold);
+        }
         info.append(title, price);
         card.append(photoButton, info);
         return card;

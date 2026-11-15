@@ -173,3 +173,7 @@ body.lightbox-open { overflow: hidden; }
   .info-note { margin: 15px 0; padding: 8px; }
   .footer { margin-top: 14px; }
 }
+
+/* Disponibilidade pública cadastrada em js/cardapio-dados.js */
+.product-sold-out{opacity:.68}
+.public-sold-out{display:inline-block;background:#9f2336;color:#fff;border-radius:6px;padding:3px 8px;font-size:.75rem;font-weight:800;margin-bottom:8px}

@@ -2,7 +2,7 @@
  * CARDÁPIO COM FOTOS — EDITE AQUI OS PRODUTOS.
  * Para alterar: name (nome), price (preço), image (foto), options (tamanhos).
  * Para adicionar categoria: copie um bloco em categories e altere id/name/items.
- * Este catálogo é uma VITRINE: alterações NÃO atualizam o banco do PDV.
+ * Fonte única de produtos publicados: o catálogo e o PDV carregam estes dados.
  * Use 4 espaços para indentar os objetos e preserve as vírgulas e aspas.
  */
 window.CARDAPIO_DADOS = {
@@ -12,7 +12,7 @@ window.CARDAPIO_DADOS = {
     "generatedBy": "Dev Kayko",
     "notes": [
         "Imagens ilustrativas geradas com IA a partir de referência visual enviada.",
-        "O cardápio não altera automaticamente o banco de dados ou o preço do PDV."
+        "Produtos e fotos publicados são sincronizados com o PDV. Estoque, vendas e alterações feitas somente no navegador permanecem locais."
     ],
     "categories": [
         {
@@ -194,7 +194,7 @@ window.CARDAPIO_DADOS = {
                 {
                     "id": "milk-shakes-tradicionais-brigadeiro",
                     "name": "Brigadeiro",
-                    "image": "assets/milkshakes/brigadeiromilkshaker.webp",
+                    "image": "assets/milkshakes/Brigadeiro.webp",
                     "options": [
                         {
                             "label": "300 ml",
@@ -214,7 +214,7 @@ window.CARDAPIO_DADOS = {
                 {
                     "id": "milk-shakes-tradicionais-chiclete",
                     "name": "Chiclete",
-                    "image": "assets/milkshakes/chicletemilkShaker.webp",
+                    "image": "assets/produtos/shake-chiclete.jpg",
                     "options": [
                         {
                             "label": "300 ml",
@@ -234,7 +234,7 @@ window.CARDAPIO_DADOS = {
                 {
                     "id": "milk-shakes-tradicionais-coco",
                     "name": "Coco",
-                    "image": "assets/milkshakes/cocomilkShaker.webp",
+                    "image": "assets/produtos/shake-coco.jpg",
                     "options": [
                         {
                             "label": "300 ml",

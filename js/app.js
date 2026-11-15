@@ -1371,8 +1371,8 @@ function bind() {
 }
 $('reportDay').value = localDate();
 $('reportMonth').value = localDate().slice(0, 7);
-bind();
-applyTheme();
+// O login e seus eventos são preparados antes de registrar os demais
+// eventos do PDV: se algum módulo de tela falhar, o formulário fica protegido.
 function clearSensitiveScreen() {
     // Evita deixar no DOM os dados do painel vistos anteriormente pelo dono.
     const ids = ['flavorRows', 'recentSales', 'lowStockList', 'homeGoal', 'productRows', 'serviceRows',
@@ -1428,3 +1428,7 @@ Access.init({
     },
     onSecurityChange: () => { render(); toast('Senha operacional do caixa atualizada com sucesso.'); }
 });
+
+// Inicialização dos módulos restantes.
+bind();
+applyTheme();

@@ -5,9 +5,10 @@
     <meta content="width=device-width, initial-scale=1" name="viewport">
     <meta content="#1857bf" name="theme-color">
     <meta content="Sorveteria Manager: sorvete somente por quilo, casquinhas, embalagens, caixa e relatórios. Dev Kayko." name="description">
-    <title>Sorveteria Manager 1.2.4 | Dev Kayko</title>
+    <title>Sorveteria Manager 1.2.7 | Dev Kayko</title>
     <link href="css/style.css" rel="stylesheet">
-    <script defer="" src="js/data.js"></script>
+    <script defer src="js/cardapio-dados.js"></script>
+    <script defer src="js/data.js"></script>
     <script defer="" src="js/security.js"></script>
     <script defer="" src="js/excel.js"></script>
     <script defer="" src="js/access.js"></script>
@@ -16,13 +17,25 @@
     <script defer="" src="js/hr.js"></script>
     <script defer="" src="js/backup.js"></script>
     <script defer="" src="js/app.js"></script>
+    <script>
+      // Diagnóstico seguro: nunca envia nem registra a senha.
+      window.addEventListener('load', function () {
+        const login = document.getElementById('loginForm');
+        if (!login || login.dataset.loginInitialized === 'true') return;
+        const error = document.getElementById('loginError');
+        if (error) {
+          error.textContent = 'Erro ao carregar o login. Atualize com Ctrl + F5 e confira se os arquivos da pasta js foram publicados.';
+          error.hidden = false;
+        }
+      });
+    </script>
   </head>
   <body class="login-locked">
     <div class="shell">
       <aside class="sidebar" id="sidebar">
         <div class="brand">
           <span class="brand-icon">🍦</span>
-          <span class="brand-copy"><strong id="brandName">Sorveteria Manager</strong> <small>PDV DE SORVETERIA • V1.2.4</small></span>
+          <span class="brand-copy"><strong id="brandName">Sorveteria Manager</strong> <small>PDV DE SORVETERIA • V1.2.7</small></span>
         </div>
         <nav aria-label="Menu principal" id="navigation">
           <button class="nav-item active" data-page="inicio" title="Visão geral"><span class="nav-icon">▦</span> <span>Visão geral</span></button>
@@ -431,7 +444,7 @@
             <div class="panel top-gap" id="milkAdminPanel">
               <div class="panel-head">
                 <h3>🥤 Milk-shakes — preços e fotos</h3>
-                <small>Edite os valores e o caminho das imagens</small>
+                <small>Cadastre sabores, escolha fotos do dispositivo ou use imagens do GitHub</small>
               </div>
               <p class="hint">
                 Escolha a foto diretamente no computador em cada sabor abaixo, ou informe o caminho de uma imagem já publicada. A foto inteira aparece no PDV. Não é necessário ter uma foto para vender.
@@ -439,6 +452,28 @@
               <form class="stack-form" id="milkPricesForm">
                 <div class="milk-admin-prices" id="milkPriceInputs"></div>
                 <button class="btn btn-primary" type="submit">Salvar preços dos milk-shakes</button>
+              </form>
+              <form class="stack-form milk-new-form" id="newMilkFlavorForm">
+                <h4>+ Adicionar novo sabor de milk-shake</h4>
+                <div class="milk-new-fields">
+                  <label>Categoria
+                    <select name="milkNewType" required>
+                      <option value="tradicional">Tradicional</option>
+                      <option value="especial">Especial</option>
+                    </select>
+                  </label>
+                  <label>Nome do sabor
+                    <input name="milkNewName" type="text" maxlength="120" placeholder="Ex.: Doce de leite" required>
+                  </label>
+                  <label>Selecionar foto do computador ou celular (opcional)
+                    <input name="milkNewFile" type="file" accept="image/png,image/jpeg,image/webp">
+                  </label>
+                  <label>Caminho da foto publicada no GitHub (opcional)
+                    <input name="milkNewImage" type="text" maxlength="400" placeholder="assets/milkshakes/doce-de-leite.webp">
+                  </label>
+                </div>
+                <button type="submit" class="btn btn-primary">+ Cadastrar sabor</button>
+                <p class="hint">Selecione uma foto local OU informe um caminho do GitHub. A foto escolhida no dispositivo fica salva neste navegador e deve ser incluída no Backup Completo (ZIP) para recuperação. Para aparecer automaticamente em outros aparelhos, publique a imagem no GitHub e use o caminho correspondente.</p>
               </form>
               <div class="milk-admin-list" id="milkFlavorAdmin"></div>
             </div>
@@ -908,7 +943,8 @@
           <button aria-pressed="true" class="login-role selected" id="loginOwner" type="button"><strong>👑 Dono</strong> <small>Acesso completo</small></button>
           <button aria-pressed="false" class="login-role" id="loginOperator" type="button"><strong>🧾 Funcionário</strong> <small>PDV com senha individual</small></button>
         </div>
-        <form autocomplete="off" class="stack-form" id="loginForm">
+        <!-- Segurança: impede que a senha seja enviada pela URL caso algum script falhe. -->
+        <form autocomplete="off" class="stack-form" id="loginForm" method="post" onsubmit="return false;">
           <p class="login-help" id="loginHelp">Informe sua senha para acessar o sistema.</p>
           <label hidden="" id="loginEmployeeWrap">
             Funcionário

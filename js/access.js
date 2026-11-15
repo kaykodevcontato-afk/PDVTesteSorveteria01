@@ -352,6 +352,7 @@ const Access = (() => {
         byId('loginOperator').addEventListener('click', () => { if (db.security)
             choose('operator'); });
         byId('loginForm').addEventListener('submit', submitLogin);
+        byId('loginForm').dataset.loginInitialized = 'true';
         byId('forgotOwnerPassword').addEventListener('click', showOwnerRecovery);
         byId('cancelOwnerRecovery').addEventListener('click', hideOwnerRecovery);
         byId('recoverOwnerForm').addEventListener('submit', submitOwnerRecovery);
